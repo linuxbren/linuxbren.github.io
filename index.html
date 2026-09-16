@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linuxbren</title>
+<meta name="description" content="linuxbren — retro tools for Omarchy. Flyover: a real-time ADS-B radar scope for your terminal.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9992;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c16;
+    --bg-darker: #07080f;
+    --panel: #11132a;
+    --fg: #ddf7ff;
+    --fg-dim: #8fa8b3;
+    --accent: #82fb9c;
+    --muted: #2d3450;
+    --alert: #50f872;
+    --border: #2d3450;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', 'Fira Code', monospace;
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* CRT scanline + vignette overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 51;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 120%);
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ---------------- header ---------------- */
+
+  header.hero {
+    padding: 72px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .prompt {
+    color: var(--fg-dim);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+  .prompt .accent { color: var(--accent); }
+
+  h1.name {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 10px rgba(130, 251, 156, 0.35), 0 0 22px rgba(130, 251, 156, 0.15);
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1em;
+    background: var(--accent);
+    margin-left: 6px;
+    vertical-align: -0.12em;
+    animation: blink 1.1s steps(1) infinite;
+    box-shadow: 0 0 8px rgba(130, 251, 156, 0.6);
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .tagline {
+    color: var(--fg-dim);
+    font-size: 1.05rem;
+    max-width: 46ch;
+  }
+
+  .hero-links {
+    margin-top: 22px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+  .hero-links a::before { content: "→ "; color: var(--muted); }
+
+  /* ---------------- sections ---------------- */
+
+  section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    color: var(--fg-dim);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .section-label::before { content: "# "; color: var(--muted); }
+
+  h2 {
+    margin: 0 0 20px;
+    font-size: 1.6rem;
+  }
+
+  /* ---------------- project card ---------------- */
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px;
+    box-shadow: 0 0 0 1px rgba(130,251,156,0.04), 0 12px 30px rgba(0,0,0,0.35);
+  }
+
+  .card-title {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .card-title h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--accent);
+  }
+  .badge-row img { vertical-align: middle; }
+  .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 4px; }
+
+  .card p.desc {
+    color: var(--fg);
+    margin: 14px 0;
+  }
+
+  .screenshot {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    margin: 18px 0;
+    display: block;
+  }
+
+  .install-block {
+    background: var(--bg-darker);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    color: var(--accent);
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+  .install-block .comment { color: var(--fg-dim); }
+
+  .link-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    font-size: 0.92rem;
+  }
+
+  .pill {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--muted);
+    color: var(--fg-dim);
+    letter-spacing: 0.04em;
+  }
+  .pill.soon {
+    color: var(--alert);
+    border-color: var(--alert);
+  }
+
+  /* ---------------- future products ---------------- */
+
+  .future-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .future-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 22px;
+  }
+  .future-card h4 {
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .future-card p {
+    margin: 0;
+    color: var(--fg-dim);
+    font-size: 0.92rem;
+  }
+  .future-card.headline {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px rgba(130,251,156,0.15), 0 12px 24px rgba(0,0,0,0.35);
+  }
+  .future-card.headline h4 { color: var(--accent); }
+
+  /* ---------------- footer ---------------- */
+
+  footer {
+    padding: 40px 0 64px;
+    color: var(--fg-dim);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--fg-dim); }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 480px) {
+    header.hero { padding: 48px 0 32px; }
+    section { padding: 40px 0; }
+    .card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="prompt"><span class="accent">bren@omarchy</span> ~ $ whoami</div>
+    <h1 class="name">linuxbren<span class="cursor"></span></h1>
+    <p class="tagline">Retro-styled tools for <a href="https://omarchy.org" target="_blank" rel="noopener">Omarchy</a>. Terminal-native, theme-aware, no chrome.</p>
+    <div class="hero-links">
+      <a href="https://github.com/linuxbren" target="_blank" rel="noopener">github.com/linuxbren</a>
+      <a href="#flyover">flyover</a>
+      <a href="#next">what's next</a>
+    </div>
+  </header>
+
+  <section id="flyover">
+    <div class="section-label">flagship</div>
+    <h2>flyover</h2>
+
+    <div class="card">
+      <div class="card-title">
+        <h3>flyover</h3>
+        <span class="pill">v0.1.0</span>
+      </div>
+      <div class="badge-row">
+        <img src="https://github.com/linuxbren/flyover/actions/workflows/ci.yml/badge.svg" alt="CI status">
+        <img src="https://img.shields.io/crates/v/flyover.svg" alt="crates.io version">
+        <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license">
+      </div>
+
+      <p class="desc">
+        A real-time ADS-B radar scope, in your terminal. Live aircraft positions
+        from <a href="https://adsb.lol" target="_blank" rel="noopener">adsb.lol</a>,
+        rendered as an old-school radar sweep — range rings, fading comet trails,
+        per-contact data tags — with two render modes: an off-screen rasterizer
+        with real phosphor glow via Sixel graphics, or a fast character-based
+        fallback that animates smoothly everywhere. Reads your live Omarchy theme
+        colors, so it always matches whatever theme you're running.
+      </p>
+
+      <img class="screenshot" src="assets/flyover.png" alt="flyover radar scope screenshot, showing range rings, a sweep line, and several aircraft contacts with data tags">
+
+      <div class="install-block"><span class="comment"># the easy way</span><br>cargo install flyover</div>
+
+      <div class="link-row">
+        <a href="https://github.com/linuxbren/flyover" target="_blank" rel="noopener">source →</a>
+        <a href="https://crates.io/crates/flyover" target="_blank" rel="noopener">crates.io →</a>
+        <a href="https://github.com/linuxbren/flyover-pill" target="_blank" rel="noopener">bar widget →</a>
+        <span class="pill">AUR: coming soon</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="next">
+    <div class="section-label">in the hangar</div>
+    <h2>What's next</h2>
+
+    <div class="future-grid">
+      <div class="future-card headline">
+        <h4>flyover screensaver <span class="pill soon">coming soon</span></h4>
+        <p>The same radar scope, running as an Omarchy idle screen — reusing
+          flyover's existing render pipeline and live theme sync, packaged to
+          take over while you're away instead of a terminal window.</p>
+      </div>
+      <div class="future-card">
+        <h4>terminal colony sim</h4>
+        <p>A Factorio/Satisfactory-flavored automation game rendered in the
+          terminal, re-skinning itself live to match your Omarchy theme.</p>
+      </div>
+      <div class="future-card">
+        <h4>wireframe flight sim</h4>
+        <p>A vector-wireframe aircraft flying over real elevation data (SRTM),
+          rendered in the same glowing CRT style as flyover.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>linuxbren · <a href="https://github.com/linuxbren" target="_blank" rel="noopener">github.com/linuxbren</a></div>
+  </footer>
+
+</div>
+
+</body>
+</html>
