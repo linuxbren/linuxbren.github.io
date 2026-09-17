@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>linuxbren</title>
-<meta name="description" content="linuxbren — retro tools for Omarchy. Flyover: a real-time ADS-B radar scope for your terminal.">
+<meta name="description" content="linuxbren — retro tools for Omarchy. Flyover: a real-time ADS-B radar scope for your terminal, plus an ambient bar widget and a native idle screensaver.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9992;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -170,14 +170,6 @@
     margin: 14px 0;
   }
 
-  .screenshot {
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    margin: 18px 0;
-    display: block;
-  }
-
   .install-block {
     background: var(--bg-darker);
     border: 1px solid var(--border);
@@ -210,6 +202,52 @@
   .pill.soon {
     color: var(--alert);
     border-color: var(--alert);
+  }
+
+  .note {
+    color: var(--fg-dim);
+    font-size: 0.82rem;
+    margin: 10px 0 0;
+  }
+
+  /* ---------------- screenshots ---------------- */
+
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 18px 0;
+  }
+  .screenshot-grid figure { margin: 0; }
+  .screenshot-grid img {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .screenshot-grid figcaption {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--fg-dim);
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 560px) {
+    .screenshot-grid { grid-template-columns: 1fr; }
+  }
+
+  .pill-shot-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0;
+  }
+  .pill-shot {
+    max-width: 320px;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #000;
+    display: block;
   }
 
   /* ---------------- future products ---------------- */
@@ -272,13 +310,47 @@
     <p class="tagline">Retro-styled tools for <a href="https://omarchy.org" target="_blank" rel="noopener">Omarchy</a>. Terminal-native, theme-aware, no chrome.</p>
     <div class="hero-links">
       <a href="https://github.com/linuxbren" target="_blank" rel="noopener">github.com/linuxbren</a>
-      <a href="#flyover">flyover</a>
+      <a href="#pill">bar widget</a>
+      <a href="#flyover">radar scope</a>
       <a href="#next">what's next</a>
     </div>
   </header>
 
+  <section id="pill">
+    <div class="section-label">always in the bar</div>
+    <h2>flyover-pill</h2>
+
+    <div class="card">
+      <div class="card-title">
+        <h3>flyover-pill</h3>
+      </div>
+      <div class="badge-row">
+        <img src="https://img.shields.io/github/stars/linuxbren/flyover-pill?style=social" alt="GitHub stars for flyover-pill">
+      </div>
+
+      <p class="desc">
+        An ambient aircraft-count widget for your Omarchy bar — always
+        visible, always current. It runs <a href="#flyover">flyover</a>
+        underneath: left-click opens the live radar scope in a terminal
+        window, right-click toggles flyover's screensaver on or off. The
+        pill itself draws nothing on its own — every number and every pixel
+        it shows comes straight from the flyover binary.
+      </p>
+
+      <div class="pill-shot-wrap">
+        <img class="pill-shot" src="assets/pill.webp" alt="the flyover-pill widget in the Omarchy bar: an airplane icon next to a live nearby-aircraft count, alongside other bar icons">
+      </div>
+
+      <div class="install-block"><span class="comment"># needs flyover installed first, see below</span><br>omarchy plugin add https://github.com/linuxbren/flyover-pill.git --enable<br>omarchy bar put bren.flyover --section right</div>
+
+      <div class="link-row">
+        <a href="https://github.com/linuxbren/flyover-pill" target="_blank" rel="noopener">source →</a>
+      </div>
+    </div>
+  </section>
+
   <section id="flyover">
-    <div class="section-label">flagship</div>
+    <div class="section-label">the scope</div>
     <h2>flyover</h2>
 
     <div class="card">
@@ -290,28 +362,42 @@
         <img src="https://github.com/linuxbren/flyover/actions/workflows/ci.yml/badge.svg" alt="CI status">
         <img src="https://img.shields.io/crates/v/flyover.svg" alt="crates.io version">
         <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license">
+        <img src="https://img.shields.io/github/stars/linuxbren/flyover?style=social" alt="GitHub stars for flyover">
       </div>
 
       <p class="desc">
-        A real-time ADS-B radar scope, in your terminal. Live aircraft positions
-        from <a href="https://adsb.lol" target="_blank" rel="noopener">adsb.lol</a>,
-        rendered as an old-school radar sweep — range rings, fading comet trails,
-        per-contact data tags — with two render modes: an off-screen rasterizer
-        with real phosphor glow via Sixel graphics, or a fast character-based
-        fallback that animates smoothly everywhere. Reads your live Omarchy theme
-        colors, so it always matches whatever theme you're running. Also runs as
-        a genuinely native Omarchy screensaver — the same live scope taking over
-        your idle screen instead of a terminal window.
+        A real-time ADS-B radar scope, in your terminal. Live aircraft
+        positions from <a href="https://adsb.lol" target="_blank" rel="noopener">adsb.lol</a>,
+        rendered as an old-school radar sweep — range rings, fading comet
+        trails, per-contact data tags. Reads your live Omarchy theme colors,
+        so it always matches whatever theme you're running.
       </p>
 
-      <img class="screenshot" src="assets/flyover.png" alt="flyover radar scope screenshot, showing range rings, a sweep line, and several aircraft contacts with data tags">
+      <div class="screenshot-grid">
+        <figure>
+          <img src="assets/flyover-sixel.webp" alt="flyover radar scope in Sixel mode, showing a glowing orange sweep line and several aircraft with data tags">
+          <figcaption>Sixel — off-screen rasterizer, real phosphor glow</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/flyover-ascii.webp" alt="flyover radar scope in Braille/ascii mode, the same scope rendered entirely in plain terminal characters">
+          <figcaption>Braille — character-based, animates smoothly everywhere</figcaption>
+        </figure>
+      </div>
+
+      <p class="desc">
+        Also runs as a genuinely native Omarchy screensaver — the same live
+        scope taking over your idle screen instead of a terminal window,
+        mirroring whichever render mode you're already using. See the
+        <a href="https://github.com/linuxbren/flyover/tree/master/packaging/screensaver" target="_blank" rel="noopener">screensaver docs</a>
+        for setup, or flip it right from the bar widget above.
+      </p>
 
       <div class="install-block"><span class="comment"># the easy way</span><br>cargo install flyover</div>
+      <p class="note">Needs a location set via Omarchy's <code>omarchy-weather-location</code> first.</p>
 
       <div class="link-row">
         <a href="https://github.com/linuxbren/flyover" target="_blank" rel="noopener">source →</a>
         <a href="https://crates.io/crates/flyover" target="_blank" rel="noopener">crates.io →</a>
-        <a href="https://github.com/linuxbren/flyover-pill" target="_blank" rel="noopener">bar widget →</a>
         <span class="pill">AUR: coming soon</span>
       </div>
     </div>
