@@ -219,7 +219,8 @@
     margin: 18px 0;
   }
   .screenshot-grid figure { margin: 0; }
-  .screenshot-grid img {
+  .screenshot-grid img,
+  .screenshot-grid video {
     width: 100%;
     border-radius: 4px;
     border: 1px solid var(--border);
@@ -375,11 +376,15 @@
 
       <div class="screenshot-grid">
         <figure>
-          <img src="assets/flyover-sixel.webp" alt="flyover radar scope in Sixel mode, showing a glowing orange sweep line and several aircraft with data tags">
+          <video autoplay loop muted playsinline poster="assets/flyover-sixel.webp" aria-label="flyover radar scope in Sixel mode, a glowing orange sweep line rotating past several aircraft with data tags">
+            <source src="assets/flyover-sixel-demo.webm" type="video/webm">
+          </video>
           <figcaption>Sixel — off-screen rasterizer, real phosphor glow</figcaption>
         </figure>
         <figure>
-          <img src="assets/flyover-ascii.webp" alt="flyover radar scope in Braille/ascii mode, the same scope rendered entirely in plain terminal characters">
+          <video autoplay loop muted playsinline poster="assets/flyover-ascii.webp" aria-label="flyover radar scope in Braille/ascii mode, the same live sweep rendered entirely in plain terminal characters">
+            <source src="assets/flyover-ascii-demo.webm" type="video/webm">
+          </video>
           <figcaption>Braille — character-based, animates smoothly everywhere</figcaption>
         </figure>
       </div>

@@ -8,10 +8,30 @@
 # doesn't have one set up, and grim-in-a-loop is plenty smooth for
 # flyover's slow sweep rotation (no fast motion to capture).
 #
-# Usage: record-flyover-demo.sh [sixel|ascii] [duration_seconds] [name]
+# Records `flyover --screensaver`, not the plain interactive TUI -- the
+# interactive app reads +/-/arrow keys to adjust zoom, so any stray input
+# landing on the window while it has focus (easy to happen by accident on
+# a live desktop) silently zooms the capture out instead of failing loudly.
+# --screensaver never reads those keys at all.
+#
+# Deliberately does NOT try to force the window to a fixed size (tried
+# pinning it floating via hl.dsp.window.float()/resize()/move(), which
+# this compositor's Lua-dispatch build only applies reliably when each
+# call is issued as its own separate, human-paced interaction -- run
+# end-to-end inside this script, the new window inconsistently never
+# actually became the focused/topmost one, so the resize silently landed
+# on a different window instead). Whatever size the current tiling layout
+# gives it is fine -- ffmpeg's scale filter below normalizes the output
+# width either way, and getting the *content* right matters far more than
+# pixel-identical framing between runs.
+#
+# Usage: record-flyover-demo.sh [sixel|ascii] [duration_seconds] [name] [warmup_seconds]
 #   sixel|ascii     which render mode to capture (default: sixel)
 #   duration_seconds  how long to record (default: 14)
 #   name            output basename under assets/ (default: flyover-<mode>-demo)
+#   warmup_seconds  how long to wait after the window appears before
+#                   recording starts, e.g. to let real traffic populate
+#                   (default: 4)
 #
 # Requires flyover on PATH or at ~/flyover/target/release/flyover, and a
 # real Hyprland session (it opens an actual window on your screen for the
@@ -22,12 +42,12 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 mode="${1:-sixel}"
 duration="${2:-14}"
 out_basename="${3:-flyover-$mode-demo}"
+warmup="${4:-4}"
 
 case "$mode" in
-sixel) render_mode=sixel ;;
-ascii) render_mode=braille ;;
+sixel | ascii) ;;
 *)
-  echo "usage: $0 [sixel|ascii] [duration_seconds] [name]" >&2
+  echo "usage: $0 [sixel|ascii] [duration_seconds] [name] [warmup_seconds]" >&2
   exit 1
   ;;
 esac
@@ -40,26 +60,11 @@ flyover_bin=$(command -v flyover || true)
 }
 
 app_id="flyover-demo-capture"
-settings_file="$HOME/.config/flyover/settings.toml"
 frames_dir=""
-
-# Set the render mode flyover starts in (it reads this at launch, so no
-# need to send it a 'v' keypress mid-recording), remembering whatever was
-# there before so it can be restored -- this shouldn't permanently change
-# your actual day-to-day render mode setting.
-mkdir -p "$(dirname "$settings_file")"
-prior_settings=""
-[[ -f $settings_file ]] && prior_settings=$(cat "$settings_file")
-printf 'render_mode = "%s"\n' "$render_mode" >"$settings_file"
 
 cleanup() {
   pkill -f -- "-a $app_id" 2>/dev/null || true
-  if [[ -n $prior_settings ]]; then
-    printf '%s\n' "$prior_settings" >"$settings_file"
-  else
-    rm -f "$settings_file"
-  fi
-  [[ -n $frames_dir ]] && rm -rf "$frames_dir"
+  if [[ -n $frames_dir ]]; then rm -rf "$frames_dir"; fi
 }
 trap cleanup EXIT
 
@@ -68,12 +73,13 @@ pkill -f -- "-a $app_id" 2>/dev/null || true
 sleep 0.3
 
 echo "Launching flyover ($mode mode)..."
-foot -a "$app_id" -T flyover -H -D "$HOME" "$flyover_bin" &
+foot -a "$app_id" -T flyover -H -D "$HOME" "$flyover_bin" --screensaver "--$mode" &
 
-deadline=$((SECONDS + 10))
-geometry=""
-while ((SECONDS < deadline)); do
-  geometry=$(hyprctl clients -j | python3 -c "
+wait_for_window() {
+  local deadline=$((SECONDS + 10))
+  local found=""
+  while ((SECONDS < deadline)); do
+    found=$(hyprctl clients -j | python3 -c "
 import json, sys
 for c in json.load(sys.stdin):
     if c['class'] == '$app_id':
@@ -81,17 +87,30 @@ for c in json.load(sys.stdin):
         print(f'{at[0]},{at[1]} {size[0]}x{size[1]}')
         break
 " 2>/dev/null)
-  [[ -n $geometry ]] && break
-  sleep 0.2
-done
-[[ -n $geometry ]] || {
+    if [[ -n $found ]]; then
+      echo "$found"
+      return 0
+    fi
+    sleep 0.2
+  done
+  return 1
+}
+
+geometry=$(wait_for_window) || {
   echo "flyover window never appeared" >&2
   exit 1
 }
 
-echo "Window at $geometry. Letting real traffic populate for a few seconds..."
-sleep 4
+echo "Window at $geometry. Waiting ${warmup}s before recording..."
+sleep "$warmup"
 
+# Deliberately no "is this window actually focused/topmost" check here:
+# whether it's focused doesn't matter for capture correctness as long as
+# it's tiled (the normal case, since this script never floats/moves it) --
+# tiled windows don't overlap, so whatever's at $geometry is genuinely
+# flyover regardless of which window currently has input focus. That
+# distinction only matters if something makes this window floating and
+# overlapping another one, which this script doesn't do.
 frames_dir=$(mktemp -d)
 echo "Recording ${duration}s..."
 frame=0
