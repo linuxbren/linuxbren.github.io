@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linuxbren — The Workshop</title>
+<meta name="description" content="Open-source tools for Omarchy and Linux.">
+<style>
+  :root{--bg:#0e1116;--panel:#161b22;--line:#252c36;--fg:#e6edf3;--dim:#8b949e;--acc:#58a6ff;--ok:#3fb950}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+  nav b{font-family:ui-monospace,monospace}
+  nav a{margin-left:18px;color:var(--dim);font-size:.9rem}
+  .hero{padding:48px 0 32px}
+  h1{font-size:clamp(2rem,5.5vw,3.2rem);line-height:1.1;margin:0 0 14px;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--acc)}
+  .lead{color:var(--dim);max-width:58ch;font-size:1.1rem;margin:0 0 22px}
+  .btn{display:inline-block;background:var(--acc);color:#04111f;font-weight:600;padding:9px 16px;border-radius:8px;margin-right:10px}
+  .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+  h2{font-size:1.25rem;margin:0 0 4px}
+  .sub{color:var(--dim);margin:0 0 20px;font-size:.95rem}
+  section{padding:40px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s}
+  .card:hover{border-color:var(--acc)}
+  .card h3{margin:0;font-size:1.1rem;display:flex;justify-content:space-between;gap:10px}
+  .lang{font-size:.72rem;color:var(--dim);border:1px solid var(--line);border-radius:99px;padding:1px 9px;height:fit-content}
+  .card p{margin:0;color:var(--dim);font-size:.93rem;flex:1}
+  .copy{display:flex;align-items:stretch;background:#0b0e13;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .copy code{flex:1;padding:8px 10px;font:.78rem ui-monospace,monospace;color:#a5d6ff;overflow-x:auto;white-space:nowrap}
+  .copy button{background:#1c232d;color:var(--dim);border:0;border-left:1px solid var(--line);padding:0 12px;cursor:pointer;font:.75rem system-ui}
+  .copy button:hover{color:var(--fg)}
+  .soon{opacity:.75;border-style:dashed}
+  .likes{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+  .like{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:left}
+  .like .i{font-size:1.6rem}
+  .like h3{margin:6px 0 2px;font-size:1rem}
+  .like p{margin:0;color:var(--dim);font-size:.85rem}
+  .x{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 18px}
+  .x div{padding:12px 0;border-bottom:1px solid var(--line);color:var(--dim);font-size:.95rem}
+  .x div:last-child{border:0}
+  .x small{display:block;color:#4b5563}
+  footer{border-top:1px solid var(--line);padding:28px 0 56px;color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><b>linuxbren</b><span><a href="#tools">Tools</a><a href="#likes">Likes</a><a href="#x">X</a><a href="https://github.com/linuxbren">GitHub</a></span></nav>
+
+  <div class="hero">
+    <h1>Open-source tools for <em>Omarchy</em> and Linux.</h1>
+    <p class="lead">Terminal-native, keyboard-first, and theme-aware. Built by a dad of one who likes planes, penguins, and pair-programming with AI.</p>
+    <a class="btn" href="#tools">Browse tools</a><a class="btn ghost" href="https://github.com/linuxbren">GitHub</a>
+  </div>
+
+  <section id="tools">
+    <h2>Tools</h2><p class="sub">Copy, paste, run.</p>
+    <div class="grid">
+      <div class="card"><h3>flyover <span class="lang">Rust · v0.2.0</span></h3>
+        <p>Real-time ADS-B radar scope in your terminal, with a native Omarchy screensaver.</p>
+        <div class="copy"><code>cargo install flyover</code><button data-copy="cargo install flyover">Copy</button></div>
+        <a href="https://github.com/linuxbren/flyover">View source →</a></div>
+      <div class="card"><h3>flyover-pill <span class="lang">QML</span></h3>
+        <p>Ambient aircraft count for your Omarchy bar. Click to open the scope.</p>
+        <div class="copy"><code>omarchy plugin add https://github.com/linuxbren/flyover-pill.git --enable</code><button data-copy="omarchy plugin add https://github.com/linuxbren/flyover-pill.git --enable">Copy</button></div>
+        <a href="https://github.com/linuxbren/flyover-pill">View source →</a></div>
+      <div class="card"><h3>tidefiles <span class="lang">Go</span></h3>
+        <p>Keyboard-first file manager. Three panes, inline image previews, trash with undo.</p>
+        <div class="copy"><code>git clone https://github.com/linuxbren/tidefiles</code><button data-copy="git clone https://github.com/linuxbren/tidefiles">Copy</button></div>
+        <a href="https://github.com/linuxbren/tidefiles">View source →</a></div>
+      <div class="card soon"><h3>Terminal colony sim <span class="lang">planned</span></h3><p>A Factorio-flavored automation game in the terminal that re-skins itself to your Omarchy theme.</p></div>
+      <div class="card soon"><h3>Wireframe flight sim <span class="lang">planned</span></h3><p>Vector-wireframe flying over real SRTM elevation data, in the same glowing CRT style.</p></div>
+    </div>
+  </section>
+
+  <section id="likes">
+    <h2>Things I like</h2><p class="sub">The reasons any of this exists.</p>
+    <div class="likes">
+      <div class="like"><div class="i">✈️</div><h3>Flight</h3><p>ADS-B, flight sims, watching the sky.</p></div>
+      <div class="like"><div class="i">🖥️</div><h3>Omarchy</h3><p>My daily driver and the target for my tools.</p></div>
+      <div class="like"><div class="i">🐧</div><h3>Linux</h3><p>Open source, all the way down.</p></div>
+      <div class="like"><div class="i">✨</div><h3>AI</h3><p>A pair-programmer for building things.</p></div>
+      <div class="like"><div class="i">👨‍👧</div><h3>Family</h3><p>Dad of one. Best project so far.</p></div>
+    </div>
+  </section>
+
+  <section id="x">
+    <h2>Latest on X</h2><p class="sub"><a href="https://x.com/YOUR_HANDLE">@YOUR_HANDLE</a></p>
+    <div class="x">
+      <div>Sample: shipped flyover 0.2.0. Native Omarchy screensaver.<small>placeholder · replace with real post</small></div>
+      <div>Sample reply: yes, it follows your live theme.<small>placeholder · replace with real post</small></div>
+    </div>
+  </section>
+
+  <footer>linuxbren · open source · <a href="https://github.com/linuxbren">github.com/linuxbren</a></footer>
+</div>
+<script>
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(b.dataset.copy);const t=b.textContent;b.textContent='Copied';setTimeout(()=>b.textContent=t,1200)}catch(e){}
+}));
+</script>
+</body>
+</html>

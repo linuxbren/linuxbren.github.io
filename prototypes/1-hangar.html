@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linuxbren — The Hangar</title>
+<meta name="description" content="Open-source tools for Omarchy and Linux. Flight, AI, family.">
+<style>
+  :root{--bg:#0b0c16;--panel:#11132a;--fg:#ddf7ff;--dim:#8fa8b3;--acc:#82fb9c;--mut:#2d3450;--warn:#ffd166}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-monospace,"JetBrains Mono","Cascadia Mono",monospace}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  nav{display:flex;justify-content:space-between;padding:18px 0;font-size:.85rem;color:var(--dim)}
+  nav a{color:var(--dim);margin-left:18px} nav a:hover{color:var(--acc)}
+  h1{font-size:clamp(2rem,6vw,3rem);margin:.2em 0 .1em;text-shadow:0 0 14px rgba(130,251,156,.35)}
+  .lead{color:var(--dim);max-width:52ch;margin:0 0 24px}
+
+  /* radar */
+  .scope{position:relative;width:min(100%,640px);aspect-ratio:1;margin:8px auto 0;border-radius:50%;
+    background:radial-gradient(circle,#0f1a1a 0,#08110f 70%);border:1px solid var(--mut);
+    box-shadow:0 0 0 1px rgba(130,251,156,.06),0 0 60px rgba(130,251,156,.08) inset}
+  .ring{position:absolute;inset:0;margin:auto;border:1px solid rgba(130,251,156,.18);border-radius:50%}
+  .r1{width:25%;height:25%}.r2{width:50%;height:50%}.r3{width:75%;height:75%}
+  .cross:before,.cross:after{content:"";position:absolute;background:rgba(130,251,156,.15)}
+  .cross:before{left:50%;top:0;bottom:0;width:1px}.cross:after{top:50%;left:0;right:0;height:1px}
+  .cross{position:absolute;inset:0}
+  .sweep{position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from 0deg,rgba(130,251,156,0) 0deg,rgba(130,251,156,0) 290deg,rgba(130,251,156,.28) 358deg,rgba(130,251,156,.7) 360deg);
+    animation:spin 7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .blip{position:absolute;transform:translate(-50%,-50%);font-size:.75rem;white-space:nowrap}
+  .blip i{display:block;width:10px;height:10px;background:var(--acc);border-radius:50%;box-shadow:0 0 10px var(--acc);margin:0 auto 4px;animation:pulse 3s ease-in-out infinite}
+  .blip span{display:block;background:rgba(7,8,15,.85);border:1px solid var(--mut);padding:2px 7px;border-radius:3px;color:var(--fg)}
+  .blip small{display:block;color:var(--dim);font-size:.65rem;margin-top:2px;text-align:center}
+  .blip.plan i{background:transparent;border:1px dashed var(--dim);box-shadow:none;animation:none}
+  .blip.plan span{color:var(--dim);border-style:dashed}
+  .blip.fav i{background:var(--warn);box-shadow:0 0 10px var(--warn);border-radius:2px;transform:rotate(45deg)}
+  .blip:hover span{border-color:var(--acc)} .blip:hover{z-index:5;text-decoration:none}
+  @keyframes pulse{50%{opacity:.35}}
+  .legend{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:.75rem;color:var(--dim);margin:18px 0 0}
+  .legend b{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:-1px}
+
+  /* sections */
+  section{padding:56px 0;border-top:1px solid var(--mut);margin-top:56px}
+  h2{font-size:1.3rem;margin:0 0 6px}
+  h2:before{content:"# ";color:var(--mut)}
+  .sub{color:var(--dim);margin:0 0 24px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--mut);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:10px}
+  .card h3{margin:0;font-size:1.05rem}
+  .tag{font-size:.7rem;color:var(--dim);border:1px solid var(--mut);border-radius:10px;padding:1px 8px;margin-left:8px;font-weight:400}
+  .card p{margin:0;color:var(--dim);font-size:.9rem;flex:1}
+  code.cmd{display:block;background:#07080f;border:1px solid var(--mut);border-radius:4px;padding:8px 10px;font-size:.78rem;color:var(--acc);overflow-x:auto;white-space:nowrap}
+  .likes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .like{border:1px solid var(--mut);border-radius:6px;padding:16px;background:var(--panel)}
+  .like b{font-size:1.4rem;display:block}.like span{color:var(--dim);font-size:.82rem}
+  .posts{display:grid;gap:12px}
+  .post{border-left:2px solid var(--acc);padding:4px 0 4px 14px;color:var(--dim);font-size:.9rem}
+  .post small{display:block;color:var(--mut)}
+  footer{padding:32px 0 60px;color:var(--dim);font-size:.8rem;border-top:1px solid var(--mut)}
+  @media(max-width:520px){.blip span{font-size:.62rem;padding:1px 5px}.blip small{display:none}}
+  @media(prefers-reduced-motion:reduce){.sweep,.blip i{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><span>bren@omarchy ~ $</span><span><a href="#tools">tools</a><a href="#likes">likes</a><a href="#x">x</a><a href="https://github.com/linuxbren">github</a></span></nav>
+
+  <h1>linuxbren</h1>
+  <p class="lead">Open-source tools for Omarchy and Linux. Built around the things I like: flying, AI, and being a dad. Every contact on the scope is something real you can install.</p>
+
+  <div class="scope" role="img" aria-label="Radar scope with projects as contacts">
+    <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="cross"></div>
+    <div class="sweep"></div>
+    <a class="blip" href="#flyover"   style="left:62%;top:30%"><i></i><span>flyover</span><small>v0.2.0 · Rust</small></a>
+    <a class="blip" href="#flyover-pill" style="left:74%;top:44%"><i></i><span>flyover-pill</span><small>QML · bar widget</small></a>
+    <a class="blip" href="#tidefiles" style="left:34%;top:64%"><i></i><span>tidefiles</span><small>Go · file manager</small></a>
+    <a class="blip plan" href="#tools" style="left:26%;top:28%"><i></i><span>colony sim</span><small>planned</small></a>
+    <a class="blip plan" href="#tools" style="left:50%;top:82%"><i></i><span>wire flight sim</span><small>planned</small></a>
+    <a class="blip fav" href="#likes" style="left:80%;top:72%"><i></i><span>AI</span></a>
+    <a class="blip fav" href="#likes" style="left:18%;top:50%"><i></i><span>Linux</span></a>
+    <a class="blip fav" href="#likes" style="left:50%;top:14%"><i></i><span>family</span></a>
+  </div>
+  <div class="legend">
+    <span><b style="background:var(--acc);border-radius:50%"></b>shipping</span>
+    <span><b style="border:1px dashed var(--dim);border-radius:50%"></b>on the ramp</span>
+    <span><b style="background:var(--warn);transform:rotate(45deg)"></b>things I like</span>
+  </div>
+
+  <section id="tools">
+    <h2>The workshop</h2>
+    <p class="sub">All open source, all terminal-native, all follow your live Omarchy theme.</p>
+    <div class="grid">
+      <div class="card" id="flyover">
+        <h3>flyover <span class="tag">v0.2.0</span></h3>
+        <p>A real-time ADS-B radar scope in your terminal. Sixel or braille rendering, fading trails, and a native Omarchy screensaver.</p>
+        <code class="cmd">cargo install flyover</code>
+        <a href="https://github.com/linuxbren/flyover">source →</a>
+      </div>
+      <div class="card" id="flyover-pill">
+        <h3>flyover-pill</h3>
+        <p>An ambient aircraft-count pill for your Omarchy bar. Left-click opens the scope, right-click toggles the screensaver.</p>
+        <code class="cmd">omarchy plugin add https://github.com/linuxbren/flyover-pill.git --enable</code>
+        <a href="https://github.com/linuxbren/flyover-pill">source →</a>
+      </div>
+      <div class="card" id="tidefiles">
+        <h3>tidefiles</h3>
+        <p>Keyboard-first terminal file manager. Three panes, real inline image previews, trash with undo, follows your theme.</p>
+        <code class="cmd">git clone github.com/linuxbren/tidefiles</code>
+        <a href="https://github.com/linuxbren/tidefiles">source →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="likes">
+    <h2>Things I like</h2>
+    <p class="sub">The reasons any of this exists.</p>
+    <div class="likes">
+      <div class="like"><b>✈</b>Flight<br><span>ADS-B, sims, watching the sky</span></div>
+      <div class="like"><b>▣</b>Omarchy<br><span>my daily driver, and the target for everything I ship</span></div>
+      <div class="like"><b>🐧</b>Linux<br><span>open source, all the way down</span></div>
+      <div class="like"><b>✦</b>AI<br><span>a pair-programmer for building the tools</span></div>
+      <div class="like"><b>♥</b>Family<br><span>dad of one</span></div>
+    </div>
+  </section>
+
+  <section id="x">
+    <h2>From X</h2>
+    <p class="sub">Recent posts and replies. <a href="https://x.com/YOUR_HANDLE">@YOUR_HANDLE →</a></p>
+    <div class="posts">
+      <div class="post">Sample post: shipped flyover 0.2.0, the radar scope now runs as a native Omarchy screensaver.<small>placeholder · replace with real post</small></div>
+      <div class="post">Sample reply: yes, it reads the live theme colors, so it always matches.<small>placeholder · replace with real post</small></div>
+      <div class="post">Sample post: tidefiles is up. Three panes, image previews, follows your theme.<small>placeholder · replace with real post</small></div>
+    </div>
+  </section>
+
+  <footer>linuxbren · <a href="https://github.com/linuxbren">github.com/linuxbren</a> · built on Omarchy</footer>
+</div>
+</body>
+</html>

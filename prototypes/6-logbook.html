@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linuxbren — Logbook</title>
+<meta name="description" content="A pilot's-log style record of open-source tools for Omarchy and Linux.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f3ecd8;--ink:#1f2a44;--dim:#6b6a5c;--rule:#c9bf9f;--blue:#2c5c9a;--mag:#a5307a;--stamp:#b3342b}
+  *{box-sizing:border-box}
+  body{margin:0;background:#d9d1b8;color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;padding:24px 12px}
+  a{color:var(--blue)}
+  .book{max-width:900px;margin:0 auto;background:var(--paper);border:1px solid var(--rule);box-shadow:0 10px 30px rgba(60,50,20,.25);padding:28px clamp(16px,4vw,44px) 40px;
+    background-image:linear-gradient(transparent 31px,rgba(44,92,154,.08) 32px);background-size:100% 32px}
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;border-bottom:3px double var(--ink);padding-bottom:14px}
+  h1{font:500 clamp(1.6rem,4.5vw,2.4rem)/1.1 "IBM Plex Mono",monospace;margin:0;letter-spacing:.02em;text-transform:uppercase}
+  .sub{font:.8rem "IBM Plex Mono",monospace;color:var(--dim);margin-top:6px}
+  .stamp{font:500 .7rem "IBM Plex Mono",monospace;color:var(--stamp);border:2px solid var(--stamp);padding:4px 10px;transform:rotate(-4deg);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+  .pilot{font-size:.95rem;margin:16px 0 4px;max-width:62ch}
+  h2{font:500 .85rem "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--mag);margin:34px 0 8px}
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th{font:500 .68rem "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em;text-align:left;color:var(--dim);border-bottom:2px solid var(--ink);padding:6px 8px}
+  td{border-bottom:1px solid var(--rule);padding:9px 8px;vertical-align:top}
+  td.m{font-family:"IBM Plex Mono",monospace;font-size:.8rem;white-space:nowrap}
+  td b{font-family:"IBM Plex Mono",monospace;font-weight:500}
+  code{font:.76rem "IBM Plex Mono",monospace;background:rgba(31,42,68,.07);padding:1px 5px;border-radius:2px;word-break:break-all}
+  .plan td{color:var(--dim)}
+  @media(max-width:640px){thead{display:none}tr{display:block;border-bottom:1px solid var(--rule);padding:8px 0}td{display:block;border:0;padding:2px 4px}td.m:before{content:attr(data-l)": ";color:var(--dim)}}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .endorse{font-size:.9rem;color:var(--dim)}
+  .endorse p{margin:0 0 8px}
+  .chips span{display:inline-block;border:1px solid var(--ink);padding:1px 10px;margin:0 6px 6px 0;font:.75rem "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.05em}
+  footer{margin-top:36px;font:.75rem "IBM Plex Mono",monospace;color:var(--dim);border-top:1px solid var(--rule);padding-top:12px}
+</style>
+</head>
+<body>
+<div class="book">
+  <header>
+    <div><h1>Logbook</h1><div class="sub">linuxbren · open-source tools for Omarchy &amp; Linux</div></div>
+    <div class="stamp">Cleared for takeoff</div>
+  </header>
+  <p class="pilot"><b>Pilot in command:</b> Bren. Dad of one. I build terminal-native tools for Omarchy and Linux, with an AI copilot in the right seat.</p>
+
+  <h2>Flights logged</h2>
+  <table>
+    <thead><tr><th>Date</th><th>Aircraft</th><th>Route</th><th>Remarks</th></tr></thead>
+    <tbody>
+      <tr><td class="m" data-l="Date">2026-09-24</td><td><b>tidefiles</b></td><td class="m" data-l="Route">Go</td><td>Keyboard-first three-pane file manager with inline image previews and trash with undo. <a href="https://github.com/linuxbren/tidefiles">source</a></td></tr>
+      <tr><td class="m" data-l="Date">2026-09-22</td><td><b>flyover</b> v0.2.0</td><td class="m" data-l="Route">Rust</td><td>Live ADS-B radar scope, native Omarchy screensaver. <code>cargo install flyover</code> <a href="https://github.com/linuxbren/flyover">source</a></td></tr>
+      <tr><td class="m" data-l="Date">2026-09-16</td><td><b>flyover-pill</b></td><td class="m" data-l="Route">QML</td><td>Ambient aircraft-count pill for the Omarchy bar. <a href="https://github.com/linuxbren/flyover-pill">source</a></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Filed flight plans</h2>
+  <table class="plan">
+    <tbody>
+      <tr><td class="m" data-l="Status" style="width:110px">planned</td><td><b>colony sim</b></td><td>A Factorio-flavored automation game in the terminal that re-skins itself to your Omarchy theme.</td></tr>
+      <tr><td class="m" data-l="Status">planned</td><td><b>wireframe flight sim</b></td><td>Vector-wireframe aircraft over real SRTM elevation data, in the same glowing CRT style.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cols">
+    <div>
+      <h2>Endorsements</h2>
+      <div class="chips"><span>Flight</span><span>Omarchy</span><span>Linux</span><span>AI</span><span>Family</span></div>
+    </div>
+    <div class="endorse">
+      <h2>Radio</h2>
+      <p>Short notes and replies on X: <a href="https://x.com/YOUR_HANDLE">@YOUR_HANDLE</a></p>
+      <p>Source for everything: <a href="https://github.com/linuxbren">github.com/linuxbren</a></p>
+    </div>
+  </div>
+
+  <footer>Total time: a few weeks · all tools open source</footer>
+</div>
+</body>
+</html>

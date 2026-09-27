@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linuxbren — Field Notes</title>
+<meta name="description" content="Open-source tools for Omarchy and Linux, plus short notes on flight, AI and family.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#faf8f4;--fg:#22201c;--dim:#6f6a60;--rule:#e4dfd5;--acc:#b4451f;--card:#fff}
+  @media(prefers-color-scheme:dark){:root{--bg:#171613;--fg:#ece8df;--dim:#9a948a;--rule:#2c2a25;--acc:#f0895a;--card:#1f1e1a}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 Inter,system-ui,sans-serif}
+  a{color:var(--acc);text-decoration-thickness:1px;text-underline-offset:3px}
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px}
+  header{padding:56px 0 24px}
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  h1{font:600 clamp(2.2rem,7vw,3.4rem)/1.1 Fraunces,Georgia,serif;margin:.3em 0}
+  .lead{font-size:1.15rem;color:var(--dim);margin:0}
+  nav{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--rule);font-size:.9rem;position:sticky;top:0;background:var(--bg)}
+  nav a{color:var(--dim);text-decoration:none} nav a:hover{color:var(--acc)}
+  section{padding:44px 0 8px}
+  h2{font:600 1.5rem Fraunces,Georgia,serif;margin:0 0 4px}
+  .sub{color:var(--dim);margin:0 0 22px;font-size:.95rem}
+  .tool{padding:18px 0;border-top:1px solid var(--rule)}
+  .tool:last-child{border-bottom:1px solid var(--rule)}
+  .tool h3{margin:0;font-size:1.05rem;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .tool h3 small{color:var(--dim);font-weight:400;font-size:.8rem}
+  .tool p{margin:4px 0 8px;color:var(--dim);font-size:.96rem}
+  code{font:.82rem ui-monospace,monospace;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:2px 6px;word-break:break-all}
+  .stream{display:grid;gap:14px}
+  .note{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px}
+  .note p{margin:0 0 4px}
+  .note small{color:var(--dim)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .tags span{border:1px solid var(--rule);background:var(--card);padding:4px 12px;border-radius:99px;font-size:.9rem}
+  footer{padding:48px 0 64px;color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Field Notes</div>
+    <h1>Small open-source tools, made for Omarchy.</h1>
+    <p class="lead">I'm Bren (linuxbren). I build terminal-native tools for Omarchy and Linux, mostly with AI as a pair-programmer, and I'm a dad of one. This page collects the tools and the short notes I post along the way.</p>
+  </header>
+  <nav><a href="#tools">Tools</a><a href="#notes">Notes</a><a href="#likes">Likes</a><a href="https://github.com/linuxbren">GitHub ↗</a></nav>
+
+  <section id="tools">
+    <h2>Tools</h2>
+    <p class="sub">Each one follows your live Omarchy theme.</p>
+    <div class="tool"><h3><a href="https://github.com/linuxbren/flyover">flyover</a><small>v0.2.0 · Rust</small></h3>
+      <p>A real-time ADS-B radar scope for your terminal, with fading trails and a native Omarchy screensaver.</p><code>cargo install flyover</code></div>
+    <div class="tool"><h3><a href="https://github.com/linuxbren/flyover-pill">flyover-pill</a><small>QML</small></h3>
+      <p>An ambient aircraft-count widget for the Omarchy bar. Click for the scope.</p><code>omarchy plugin add https://github.com/linuxbren/flyover-pill.git --enable</code></div>
+    <div class="tool"><h3><a href="https://github.com/linuxbren/tidefiles">tidefiles</a><small>Go</small></h3>
+      <p>A keyboard-first terminal file manager: three panes, inline image previews, trash with undo.</p><code>github.com/linuxbren/tidefiles</code></div>
+  </section>
+
+  <section id="notes">
+    <h2>Notes</h2>
+    <p class="sub">Pulled from X. <a href="https://x.com/YOUR_HANDLE">@YOUR_HANDLE</a></p>
+    <div class="stream">
+      <div class="note"><p>Sample: shipped flyover 0.2.0. The radar scope now runs as a native Omarchy screensaver.</p><small>placeholder · replace with a real post</small></div>
+      <div class="note"><p>Sample reply: it reads the live theme colors, so it always matches whatever you're running.</p><small>placeholder · replace with a real post</small></div>
+    </div>
+  </section>
+
+  <section id="likes">
+    <h2>Likes</h2>
+    <p class="sub">What keeps me building.</p>
+    <div class="tags"><span>✈ Flight</span><span>Omarchy</span><span>Linux</span><span>AI</span><span>Family</span></div>
+  </section>
+
+  <footer>© linuxbren · open source · <a href="https://github.com/linuxbren">github.com/linuxbren</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linuxbren — Omarchy Toolbox</title>
+<meta name="description" content="Theme-aware add-ons for Omarchy: flyover, flyover-pill, tidefiles.">
+<style>
+  :root{--bg:#1a1b26;--panel:#24283b;--fg:#c0caf5;--dim:#7982a9;--acc:#7aa2f7;--acc2:#9ece6a;--line:#33384f}
+  [data-theme="catppuccin"]{--bg:#1e1e2e;--panel:#313244;--fg:#cdd6f4;--dim:#9399b2;--acc:#cba6f7;--acc2:#a6e3a1;--line:#45475a}
+  [data-theme="gruvbox"]{--bg:#282828;--panel:#3c3836;--fg:#ebdbb2;--dim:#a89984;--acc:#fabd2f;--acc2:#b8bb26;--line:#504945}
+  [data-theme="nord"]{--bg:#2e3440;--panel:#3b4252;--fg:#eceff4;--dim:#9aa5b8;--acc:#88c0d0;--acc2:#a3be8c;--line:#4c566a}
+  [data-theme="rose-pine"]{--bg:#191724;--panel:#26233a;--fg:#e0def4;--dim:#908caa;--acc:#ebbcba;--acc2:#9ccfd8;--line:#403d52}
+  [data-theme="everforest"]{--bg:#2d353b;--panel:#3d484d;--fg:#d3c6aa;--dim:#859289;--acc:#a7c080;--acc2:#e69875;--line:#475258}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-monospace,"JetBrains Mono","Cascadia Mono",monospace;transition:background .25s,color .25s}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:16px 0;font-size:.85rem}
+  .themes{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .themes button{background:var(--panel);color:var(--dim);border:1px solid var(--line);border-radius:99px;padding:3px 11px;font:inherit;font-size:.75rem;cursor:pointer}
+  .themes button[aria-pressed=true]{color:var(--bg);background:var(--acc);border-color:var(--acc)}
+  h1{font-size:clamp(1.9rem,5vw,2.8rem);margin:36px 0 8px;line-height:1.15}
+  h1 em{font-style:normal;color:var(--acc)}
+  .lead{color:var(--dim);max-width:60ch;margin:0 0 8px}
+  .hint{color:var(--dim);font-size:.78rem;margin:0 0 28px}
+  .tool{display:grid;grid-template-columns:1fr 1fr;gap:22px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;margin-bottom:18px}
+  @media(max-width:720px){.tool{grid-template-columns:1fr}}
+  .tool h2{margin:0 0 4px;font-size:1.25rem}
+  .tool h2 small{color:var(--dim);font-weight:400;font-size:.75rem;margin-left:6px}
+  .tool p{color:var(--dim);font-size:.9rem;margin:6px 0 12px}
+  .inst{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:.76rem;color:var(--acc2);overflow-x:auto;white-space:nowrap;margin-bottom:10px}
+  .prev{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px;font-size:.72rem;line-height:1.35;min-height:150px;overflow:hidden;white-space:pre}
+  .prev .a{color:var(--acc)}.prev .b{color:var(--acc2)}.prev .d{color:var(--dim)}
+  .pill{display:inline-flex;gap:6px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:.85rem}
+  .about{border-top:1px solid var(--line);margin-top:40px;padding:32px 0 56px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:720px){.about{grid-template-columns:1fr}}
+  .about h3{margin:0 0 8px;font-size:1rem;color:var(--acc)}
+  .about p{margin:0;color:var(--dim);font-size:.9rem}
+  .likes span{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 12px;margin:0 6px 6px 0;font-size:.82rem;color:var(--fg)}
+</style>
+</head>
+<body data-theme="tokyo-night">
+<div class="wrap">
+  <div class="top">
+    <span>linuxbren / omarchy-toolbox</span>
+    <div class="themes" role="group" aria-label="Preview theme">
+      <span style="color:var(--dim)">theme:</span>
+      <button data-t="tokyo-night" aria-pressed="true">tokyo-night</button>
+      <button data-t="catppuccin" aria-pressed="false">catppuccin</button>
+      <button data-t="gruvbox" aria-pressed="false">gruvbox</button>
+      <button data-t="nord" aria-pressed="false">nord</button>
+      <button data-t="rose-pine" aria-pressed="false">rose-pine</button>
+      <button data-t="everforest" aria-pressed="false">everforest</button>
+    </div>
+  </div>
+
+  <h1>Add-ons that <em>follow your theme</em>.</h1>
+  <p class="lead">Open-source tools for Omarchy. Change themes and every one of them re-colors live, no restart.</p>
+  <p class="hint">↑ Try the theme buttons: this page does the same thing.</p>
+
+  <div class="tool">
+    <div>
+      <h2>flyover <small>v0.2.0 · Rust</small></h2>
+      <p>A real-time ADS-B radar scope in your terminal, with range rings, fading trails and per-contact tags. Also a native Omarchy screensaver.</p>
+      <div class="inst">cargo install flyover</div>
+      <a href="https://github.com/linuxbren/flyover">source</a> · <a href="https://crates.io/crates/flyover">crates.io</a>
+    </div>
+    <div class="prev" aria-hidden="true"><span class="d">        ·  ·  ·  ·  ·
+     ·                   ·
+   ·        <span class="a">╭─────╮</span>        ·
+  ·        <span class="a">╱</span>  <span class="b">✈ UAL482</span> <span class="a">╲</span>       ·
+  ·       <span class="a">│</span>   <span class="b">FL340</span>     <span class="a">│</span>      ·
+   ·       <span class="a">╲</span>    ·      <span class="a">╱</span>      ·
+     ·      <span class="a">╰─────╯</span>    ·
+        ·  ·  ·  ·  ·</span></div>
+  </div>
+
+  <div class="tool">
+    <div>
+      <h2>flyover-pill <small>QML · bar widget</small></h2>
+      <p>An ambient aircraft count in your bar. Left-click opens the scope, right-click toggles the screensaver.</p>
+      <div class="inst">omarchy plugin add https://github.com/linuxbren/flyover-pill.git --enable</div>
+      <a href="https://github.com/linuxbren/flyover-pill">source</a>
+    </div>
+    <div class="prev" aria-hidden="true"><span class="d">bar →</span>  <span class="pill">✈ <b style="color:var(--acc2)">14</b> overhead</span>
+<span class="d">
+left-click   open scope
+right-click  toggle screensaver</span></div>
+  </div>
+
+  <div class="tool">
+    <div>
+      <h2>tidefiles <small>Go · file manager</small></h2>
+      <p>Keyboard-first three-pane file manager with inline image previews, trash with undo, and a live theme picker.</p>
+      <div class="inst">git clone https://github.com/linuxbren/tidefiles</div>
+      <a href="https://github.com/linuxbren/tidefiles">source</a>
+    </div>
+    <div class="prev" aria-hidden="true"><span class="d">parent/      </span><span class="a">projects/</span>    <span class="d">preview</span>
+<span class="d">Documents/   </span><span class="a">▸ flyover/</span>    <span class="b">fn main() {</span>
+<span class="d">Downloads/   </span><span class="d">  tidefiles/</span>   <span class="b">  radar::run()</span>
+<span class="d">projects/    </span><span class="d">  notes.md</span>     <span class="b">}</span></div>
+  </div>
+
+  <div class="about">
+    <div>
+      <h3>About</h3>
+      <p>I'm Bren (linuxbren): a dad of one who builds small open-source tools for Omarchy, usually with an AI pair-programmer.</p>
+    </div>
+    <div class="likes">
+      <h3>Likes</h3>
+      <span>✈ flight</span><span>omarchy</span><span>linux</span><span>ai</span><span>family</span>
+      <p style="margin-top:10px"><a href="https://github.com/linuxbren">GitHub</a> · <a href="https://x.com/YOUR_HANDLE">X</a></p>
+    </div>
+  </div>
+</div>
+<script>
+const btns=document.querySelectorAll('[data-t]');
+btns.forEach(b=>b.addEventListener('click',()=>{
+  document.body.dataset.theme=b.dataset.t;
+  btns.forEach(x=>x.setAttribute('aria-pressed',x===b));
+}));
+</script>
+</body>
+</html>
