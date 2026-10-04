@@ -151,7 +151,36 @@
     flex-direction: column;
     min-width: 0;
   }
-  .tool:hover { border-color: rgba(130, 251, 156, 0.45); }
+  /* the whole card links to the repo: the title's ::after stretches over it,
+     and the inner links, code box and copy button sit above that overlay */
+  .tool {
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .tool:hover,
+  .tool:focus-within {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(130, 251, 156, 0.2);
+  }
+  .card-link { color: inherit; }
+  .card-link:hover { text-decoration: none; }
+  .card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 6px;
+  }
+  .card-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .tool p a, .tool .links a, .tool .cmd { position: relative; z-index: 2; }
+  .tool .cmd { cursor: text; }
+  .copy { cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) {
+    .tool { transition: none; }
+    .tool:hover, .tool:focus-within { transform: none; }
+  }
 
   .shot { margin: 0 0 18px; }
 
@@ -358,7 +387,7 @@
           <img src="assets/tidefiles-images.webp" width="1200" height="642" alt="tidefiles in a Pictures folder: parent folder, file list, and an inline preview of a northern-lights image">
         </div>
         <div class="tool-head">
-          <h3>tidefiles</h3>
+          <h3><a class="card-link" href="https://github.com/linuxbren/tidefiles" target="_blank" rel="noopener">tidefiles</a></h3>
           <span class="chip">v0.6.0 · Go</span>
         </div>
         <p>A keyboard-first, three-pane file manager for your terminal. Previews code, images and markdown right in the pane, browses inside zip and tar archives like ordinary folders, sends deletes to a real trash with undo, and follows your Omarchy theme.</p>
@@ -377,7 +406,7 @@
           </video>
         </div>
         <div class="tool-head">
-          <h3>flyover</h3>
+          <h3><a class="card-link" href="https://github.com/linuxbren/flyover" target="_blank" rel="noopener">flyover</a></h3>
           <span class="chip">v0.3.1 · Rust</span>
         </div>
         <p>A real-time ADS-B radar scope in your terminal. Live aircraft from <a href="https://adsb.lol" target="_blank" rel="noopener">adsb.lol</a> on an old-school sweep, with range rings, fading trails and data tags. Also runs as a native Omarchy screensaver, taking over your idle screen.</p>
@@ -395,7 +424,7 @@
           <img src="assets/pill.webp" width="540" height="60" alt="the flyover-pill widget in the Omarchy bar: an airplane icon and a live count of 7 nearby aircraft, next to other bar icons">
         </div>
         <div class="tool-head">
-          <h3>flyover-pill</h3>
+          <h3><a class="card-link" href="https://github.com/linuxbren/flyover-pill" target="_blank" rel="noopener">flyover-pill</a></h3>
           <span class="chip">Omarchy plugin · QML</span>
         </div>
         <p>An ambient aircraft count for your Omarchy bar, always visible and always current. Left-click opens the live flyover scope in a terminal; right-click toggles flyover's screensaver on or off. Every number it shows comes straight from flyover.</p>
