@@ -384,15 +384,17 @@
       <article class="tool">
         <div class="shot window">
           <div class="titlebar"><i></i><i></i><i></i><span>tidefiles — ~/Pictures</span></div>
-          <img src="assets/tidefiles-images.webp" width="1200" height="642" alt="tidefiles in a Pictures folder: parent folder, file list, and an inline preview of a northern-lights image">
+          <img src="assets/tidefiles-images.webp" width="1200" height="642" alt="tidefiles with three open tabs and a sharp inline preview of a northern-lights image">
         </div>
         <div class="tool-head">
           <h3><a class="card-link" href="https://github.com/linuxbren/tidefiles" target="_blank" rel="noopener">tidefiles</a></h3>
-          <span class="chip">v0.6.0 · Go</span>
+          <span class="chip">v0.7.0 · Go</span>
         </div>
         <p>A keyboard-first, three-pane file manager for your terminal. Previews code, images and markdown right in the pane, browses inside zip and tar archives like ordinary folders, sends deletes to a real trash with undo, and follows your Omarchy theme.</p>
-        <div class="cmd"><pre>go install github.com/linuxbren/tidefiles@latest</pre><button class="copy" type="button">copy</button></div>
-        <p class="note">Linux only. Lands in <code>~/go/bin</code>; make sure that's on your <code>PATH</code>.</p>
+        <div class="cmd"><pre>arch=amd64   # or arm64
+curl -L https://github.com/linuxbren/tidefiles/releases/latest/download/tidefiles_linux_$arch.tar.gz | tar xz tidefiles
+install -Dm755 tidefiles ~/.local/bin/tidefiles</pre><button class="copy" type="button">copy</button></div>
+        <p class="note">Linux only, x86_64 or arm64. Static binary, updates itself. Packages and Nix too — see the repo.</p>
         <div class="links">
           <a href="https://github.com/linuxbren/tidefiles" target="_blank" rel="noopener">source →</a>
           <a href="https://github.com/linuxbren/tidefiles/releases" target="_blank" rel="noopener">releases →</a>

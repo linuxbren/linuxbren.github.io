@@ -53,7 +53,7 @@ Everything in `assets/` is loaded by `index.html`:
 
 | file | used for |
 |---|---|
-| `tidefiles-images.webp` | tidefiles card (1200px webp made from tidefiles' `docs/screenshots/images.png`) |
+| `tidefiles-images.webp` | tidefiles card (1200px webp made from tidefiles' `docs/screenshots/tabs.png`, v0.7.0) |
 | `flyover-ascii-demo.webm` | flyover's round radar (looping Braille-mode clip, 480×508) |
 | `flyover-ascii.webp` | poster frame for that clip |
 | `pill.webp` | flyover-pill bar strip (540×60, shown at actual size) |
@@ -77,6 +77,3 @@ centered in a roughly 480×508 frame.
 - **✈ in the wordmark** renders as a color emoji on some systems, because
   neither web font has the glyph. An inline SVG plane would fix it.
 - **No `og:image` yet.** The OG title/description/url tags are in place.
-- **tidefiles v0.7.0** (first normal release, on/after Oct 8): switch the install
-  line from `go install` to the release-binary download, bump the chip, and
-  refresh the screenshot to show tabs.
