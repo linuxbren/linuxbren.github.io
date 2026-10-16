@@ -53,7 +53,7 @@ Everything in `assets/` is loaded by `index.html`:
 
 | file | used for |
 |---|---|
-| `tidefiles-images.webp` | tidefiles card (1200px webp made from tidefiles' `docs/screenshots/tabs.png`, v0.7.0) |
+| `tidefiles-hero.webp` | tidefiles card (1200px webp made from tidefiles' `docs/screenshots/tailscale.png`, v0.10.0) |
 | `flyover-ascii-demo.webm` | flyover's round radar (looping Braille-mode clip, 480×508) |
 | `flyover-ascii.webp` | poster frame for that clip |
 | `pill.webp` | flyover-pill bar strip (540×60, shown at actual size) |
