@@ -1,6 +1,6 @@
 # linuxbren.github.io
 
-Personal site: retro-styled tools for Omarchy ([tidefiles](https://github.com/linuxbren/tidefiles),
+Personal site: retro-styled tools for Omarchy ([console-places](https://github.com/linuxbren/console-places),
 [flyover](https://github.com/linuxbren/flyover), [flyover-pill](https://github.com/linuxbren/flyover-pill)).
 One static `index.html`, plain HTML/CSS plus a few lines of JS for the copy
 buttons, no build step. Served by GitHub Pages from `master`.
@@ -19,9 +19,9 @@ covers websites only; other code waits for his OK before pushing.)
 - **Nav:** `linuxbren ✈` wordmark; tools · hangar · about · github ↗.
 - **Hero:** prompt line, h1 "Retro tools for Omarchy.", lede, two buttons.
 - **Toolbox (`#tools`):** a three-column grid (`auto-fit, minmax(300px, 1fr)`;
-  one column on phones) of equal cards, in this order: tidefiles, flyover, flyover-pill.
+  one column on phones) of equal cards, in this order: console-places, flyover, flyover-pill.
   Each card leads with its own kind of shot:
-  - tidefiles: a 16:10 terminal window with one screenshot
+  - console-places: a 16:10 terminal window with one screenshot
   - flyover: a round radar, a live looping clip in a circular mask, max 300px
   - flyover-pill: a 72px bar strip with the pill at actual size
 
@@ -53,7 +53,7 @@ Everything in `assets/` is loaded by `index.html`:
 
 | file | used for |
 |---|---|
-| `tidefiles-hero.webp` | tidefiles card (1200px webp made from tidefiles' `docs/screenshots/tailscale.png`, v0.10.0) |
+| `tidefiles-hero.webp` | console-places card (1200px webp made from console-places' `docs/screenshots/tailscale.png`, v0.10.0, still valid after the v0.11 rename — the TUI itself shows no app-name text) |
 | `flyover-ascii-demo.webm` | flyover's round radar (looping Braille-mode clip, 480×508) |
 | `flyover-ascii.webp` | poster frame for that clip |
 | `pill.webp` | flyover-pill bar strip (540×60, shown at actual size) |
