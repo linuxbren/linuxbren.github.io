@@ -20,19 +20,18 @@ covers websites only; other code waits for his OK before pushing.)
 
 - **Nav:** `linuxbren ✈` wordmark; tools · hangar · about · github ↗.
 - **Hero:** prompt line, h1 "Retro tools for Omarchy.", lede, two buttons.
-- **Toolbox (`#tools`):** a responsive grid (`auto-fit, minmax(300px, 1fr)`;
+- **Toolbox (`#tools`):** a three-column grid (`auto-fit, minmax(300px, 1fr)`;
   one column on phones) of equal cards, in this order: console-places, flyover,
-  flyover-pill, caravan.
-  Each card leads with its own kind of shot:
+  flyover-pill. Each card leads with its own kind of shot:
   - console-places: a 16:10 terminal window with one screenshot
   - flyover: a round radar, a live looping clip in a circular mask, max 300px
   - flyover-pill: a 72px bar strip with the pill at actual size
-  - caravan: a 16:9 lab still (layer-split diagram); the card links to
-    `caravan.html`
 
   Then the name, a version/language chip, a one-paragraph pitch, the install
   command with a copy button, and links. Long per-tool detail lives in each
   tool's README, not here.
+- **Caravan (`#caravan`):** its own spotlight section (not in the Omarchy
+  toolbox), linking to `caravan.html`. Wide card with a 16:9 lab still.
 - **In the hangar (`#hangar`):** dashed "soon" cards for upcoming projects.
 - **About (`#about`)** strip with interest chips, then the footer.
 
@@ -62,12 +61,16 @@ Everything in `assets/` is loaded by `index.html`:
 | `flyover-ascii-demo.webm` | flyover's round radar (looping Braille-mode clip, 480×508) |
 | `flyover-ascii.webp` | poster frame for that clip |
 | `pill.webp` | flyover-pill bar strip (540×60, shown at actual size) |
-| `caravan-hero.webp` | caravan index card (layer-split still from Day 6 v12) |
-| `caravan-day6-v12.mp4` | Day 6 lab video on `caravan.html` (~2.2 MB, 1920×1080) |
-| `caravan-day6-poster.webp` | poster frame for that video |
+| `caravan-hero.webp` | caravan spotlight still (layer-split diagram from Day 6 v12) |
+| `caravan-day6-poster.webp` | featured Day 6 poster |
+| `caravan-lab/v1.webp` … `v12.webp` | small posters for the lab video library (~90 KB total) |
 
 `caravan.html` is the project page: pitch, measured numbers (sourced from the
-Caravan repo docs), Day 6 video, status, clone command.
+Caravan repo docs), featured Day 6 player, lab video library, status, clone
+command. Lab mp4s are **not** stored here — they stream from the public
+`linuxbren/caravan` repo (`raw.githubusercontent.com`, with a jsDelivr
+`video/mp4` fallback). Superseded cuts (v5, v7, v10, v11) sit in a collapsed
+details block.
 
 Screenshots from other repos are converted with
 `magick in.png -resize 1200x -quality 82 -define webp:method=6 out.webp`.

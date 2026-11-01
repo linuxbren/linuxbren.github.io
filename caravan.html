@@ -291,6 +291,152 @@
   footer a { color: var(--dim); }
   footer a:hover { color: var(--accent); }
 
+
+  .lab-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .lab-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  button.lab-card { width: 100%; }
+  .lab-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lab-card { transition: none; }
+    .lab-card:hover { transform: none; }
+  }
+  .lab-card .thumb {
+    aspect-ratio: 16 / 9;
+    background: #000;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+  .lab-card .meta {
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+  .lab-card .day {
+    color: var(--accent);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .lab-card .title {
+    color: var(--fg);
+    font-size: 0.84rem;
+    line-height: 1.35;
+    margin: 0;
+  }
+  .lab-card .when {
+    color: var(--dim);
+    font-size: 0.72rem;
+    margin-top: auto;
+  }
+  .lab-note {
+    margin: 0 0 16px;
+    color: var(--dim);
+    font-size: 0.86rem;
+    max-width: 70ch;
+  }
+  details.lab-old {
+    margin-top: 18px;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    background: var(--deep);
+  }
+  details.lab-old > summary {
+    cursor: pointer;
+    color: var(--dim);
+    font-size: 0.88rem;
+    list-style: none;
+  }
+  details.lab-old > summary::-webkit-details-marker { display: none; }
+  details.lab-old > summary::before {
+    content: "▸ ";
+    color: var(--accent);
+  }
+  details.lab-old[open] > summary::before { content: "▾ "; }
+  details.lab-old .lab-strip { margin-top: 12px; }
+  details.lab-old .lab-card { opacity: 0.9; }
+
+  .player-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .player-backdrop.open { display: flex; }
+  .player-box {
+    width: min(960px, 100%);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+  .player-box header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .player-box header h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .player-box header button {
+    font: inherit;
+    font-size: 0.8rem;
+    color: var(--dim);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+  .player-box header button:hover { color: var(--accent); border-color: var(--accent); }
+  .player-box video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+  .player-box .player-foot {
+    padding: 10px 14px 14px;
+    color: var(--dim);
+    font-size: 0.8rem;
+  }
+  .player-box .player-foot a { margin-right: 14px; }
+
   @media (max-width: 480px) {
     .wrap { padding: 0 16px; }
     .hero { padding: 48px 0 36px; }
@@ -308,6 +454,7 @@
     <ul>
       <li><a href="index.html#tools">tools</a></li>
       <li><a class="active" href="caravan.html">caravan</a></li>
+      <li><a href="#lab">lab</a></li>
       <li><a href="index.html#hangar">hangar</a></li>
       <li><a href="index.html#about">about</a></li>
       <li><a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">github ↗</a></li>
@@ -326,7 +473,7 @@
     </div>
     <div class="cta">
       <a class="btn fill" href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">github.com/linuxbren/caravan</a>
-      <a class="btn line" href="#day6">Watch Day 6</a>
+      <a class="btn line" href="#lab">Lab videos</a>
     </div>
   </header>
 
@@ -392,13 +539,123 @@
   <section id="day6">
     <div class="label">lab video · day 6</div>
     <h2>Several chats at once</h2>
-    <p class="prose" style="margin:0 0 16px">The current Day 6 cut (v12). One model split across two minis; two chats keep both GPUs busy; a fairer schedule for a third. About a minute.</p>
+    <p class="prose" style="margin:0 0 16px">The current Day 6 cut (v12). One model split across two minis; two chats keep both GPUs busy; a fairer schedule for a third. About a minute. Streamed from the public Caravan repo — nothing big hosted on this site.</p>
     <div class="video-wrap">
-      <video controls preload="metadata" poster="assets/caravan-day6-poster.webp" playsinline>
-        <source src="assets/caravan-day6-v12.mp4" type="video/mp4">
+      <video id="day6-video" controls preload="metadata" poster="assets/caravan-day6-poster.webp" playsinline
+        data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4"
+        data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4">
       </video>
     </div>
-    <p class="video-cap">Also on GitHub: <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4" target="_blank" rel="noopener">handoff/lab/videos/…_v12.mp4</a>. Earlier Day 4 (MLX split) and Day 5 (keepalive) cuts live in the same folder.</p>
+    <p class="video-cap">If the player is quiet, <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4" target="_blank" rel="noopener">open v12 on GitHub</a>. Raw GitHub serves these as <code>application/octet-stream</code>; Chrome plays that, and we fall back to a jsDelivr mirror (<code>video/mp4</code>) if needed.</p>
+  </section>
+
+  <section id="lab">
+    <div class="label">lab video library</div>
+    <h2>Building Caravan in the open</h2>
+    <p class="lab-note">Short cuts from the Mac mini lab, newest first among the current takes. Click a card to play inline. Posters live here (~100&nbsp;KB total); the mp4s stay in <a href="https://github.com/linuxbren/caravan/tree/caravan-v3-mlx-split/handoff/lab/videos" target="_blank" rel="noopener">linuxbren/caravan</a> (public). Titles and dates from the repo’s <code>handoff/lab/videos/index.md</code>.</p>
+    <div class="lab-strip">
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4" data-title="Several chats at once (techie-friend cut)" data-poster="assets/caravan-lab/v12.webp">
+        <img class="thumb" src="assets/caravan-lab/v12.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 6 · current</span>
+          <p class="title">Several chats at once (techie-friend cut)</p>
+          <span class="when">Nov 1 · 1:03 · v12</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v3-keepalive_v9.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v3-keepalive_v9.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v3-keepalive_v9.mp4" data-title="GPU keepalive on the split" data-poster="assets/caravan-lab/v9.webp">
+        <img class="thumb" src="assets/caravan-lab/v9.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 5 · current</span>
+          <p class="title">GPU keepalive on the split</p>
+          <span class="when">Oct 31 · 0:53 · v9</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v2.1-vs-v3_mlx-split_v8.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v2.1-vs-v3_mlx-split_v8.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v2.1-vs-v3_mlx-split_v8.mp4" data-title="One MLX model across two Minis" data-poster="assets/caravan-lab/v8.webp">
+        <img class="thumb" src="assets/caravan-lab/v8.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 4 · current</span>
+          <p class="title">One MLX model across two Minis</p>
+          <span class="when">Oct 31 · 1:26 · v8</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v1-vs-v2_mlx-chat-memory_v6.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v1-vs-v2_mlx-chat-memory_v6.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v1-vs-v2_mlx-chat-memory_v6.mp4" data-title="MLX chat memory (v1 → v2)" data-poster="assets/caravan-lab/v6.webp">
+        <img class="thumb" src="assets/caravan-lab/v6.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 3</span>
+          <p class="title">MLX chat memory (v1 → v2)</p>
+          <span class="when">Oct 31 · 1:10 · v6</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_caravan-v0-vs-v1_runtime-compare_v4.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_caravan-v0-vs-v1_runtime-compare_v4.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_caravan-v0-vs-v1_runtime-compare_v4.mp4" data-title="Caravan v0 vs v1 next to the field" data-poster="assets/caravan-lab/v4.webp">
+        <img class="thumb" src="assets/caravan-lab/v4.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Oct 30</span>
+          <p class="title">Caravan v0 vs v1 next to the field</p>
+          <span class="when">Oct 30 · 1:05 · v4</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_caravan-localai-llamacpp-exo_v3.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_caravan-localai-llamacpp-exo_v3.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_caravan-localai-llamacpp-exo_v3.mp4" data-title="Caravan vs LocalAI vs llama.cpp vs exo" data-poster="assets/caravan-lab/v3.webp">
+        <img class="thumb" src="assets/caravan-lab/v3.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Oct 30</span>
+          <p class="title">Caravan vs LocalAI vs llama.cpp vs exo</p>
+          <span class="when">Oct 30 · 0:56 · v3</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_caravan-llamacpp-ollama-exo_v2.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_caravan-llamacpp-ollama-exo_v2.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_caravan-llamacpp-ollama-exo_v2.mp4" data-title="Caravan joins the runtime compare" data-poster="assets/caravan-lab/v2.webp">
+        <img class="thumb" src="assets/caravan-lab/v2.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Oct 30</span>
+          <p class="title">Caravan joins the runtime compare</p>
+          <span class="when">Oct 30 · 0:53 · v2</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_llamacpp-ollama-exo_v1.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_llamacpp-ollama-exo_v1.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-30_runtime-compare_llamacpp-ollama-exo_v1.mp4" data-title="llama.cpp vs Ollama vs exo" data-poster="assets/caravan-lab/v1.webp">
+        <img class="thumb" src="assets/caravan-lab/v1.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Oct 30</span>
+          <p class="title">llama.cpp vs Ollama vs exo</p>
+          <span class="when">Oct 30 · 0:45 · v1</span>
+        </div>
+      </button>
+    </div>
+    <details class="lab-old">
+      <summary>Superseded drafts (v5, v7, v10, v11) — kept in the repo, replaced by later cuts</summary>
+      <div class="lab-strip">
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v11.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v11.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v11.mp4" data-title="Several chats — beginner cut (superseded by v12)" data-poster="assets/caravan-lab/v11.webp">
+        <img class="thumb" src="assets/caravan-lab/v11.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 6 · draft</span>
+          <p class="title">Several chats — beginner cut (superseded by v12)</p>
+          <span class="when">Nov 1 · 1:03 · v11</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v10.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v10.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v10.mp4" data-title="Several chats — jargon cut (superseded by v11→v12)" data-poster="assets/caravan-lab/v10.webp">
+        <img class="thumb" src="assets/caravan-lab/v10.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 6 · draft</span>
+          <p class="title">Several chats — jargon cut (superseded by v11→v12)</p>
+          <span class="when">Nov 1 · 0:51 · v10</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v2.1-vs-v3_mlx-split_v7.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v2.1-vs-v3_mlx-split_v7.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v2.1-vs-v3_mlx-split_v7.mp4" data-title="Two-Mini MLX split before lead/packer naming (superseded by v8)" data-poster="assets/caravan-lab/v7.webp">
+        <img class="thumb" src="assets/caravan-lab/v7.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 4 · draft</span>
+          <p class="title">Two-Mini MLX split before lead/packer naming (superseded by v8)</p>
+          <span class="when">Oct 31 · 1:18 · v7</span>
+        </div>
+      </button>
+      <button type="button" class="lab-card" data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v1-vs-v2_mlx-chat-memory_v5.mp4" data-src-jsd="https://cdn.jsdelivr.net/gh/linuxbren/caravan@caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v1-vs-v2_mlx-chat-memory_v5.mp4" data-gh="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-10-31_caravan-v1-vs-v2_mlx-chat-memory_v5.mp4" data-title="MLX chat memory dated cut (superseded by v6)" data-poster="assets/caravan-lab/v5.webp">
+        <img class="thumb" src="assets/caravan-lab/v5.webp" width="480" height="270" alt="" loading="lazy">
+        <div class="meta">
+          <span class="day">Day 3 · draft</span>
+          <p class="title">MLX chat memory dated cut (superseded by v6)</p>
+          <span class="when">Oct 31 · 1:10 · v5</span>
+        </div>
+      </button>
+      </div>
+    </details>
   </section>
 
   <section id="status">
@@ -424,6 +681,100 @@ cd caravan && git checkout caravan-v3-mlx-split</pre><button class="copy" type="
 
 </div>
 
+
+<div class="player-backdrop" id="player" hidden>
+  <div class="player-box" role="dialog" aria-modal="true" aria-labelledby="player-title">
+    <header>
+      <h3 id="player-title">Lab video</h3>
+      <button type="button" id="player-close">close</button>
+    </header>
+    <video id="player-video" controls playsinline preload="metadata"></video>
+    <div class="player-foot">
+      <a id="player-gh" href="#" target="_blank" rel="noopener">open on GitHub →</a>
+      <span id="player-status"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  function trySources(video, raw, jsd, statusEl) {
+    return new Promise(function (resolve) {
+      var sources = [
+        { url: raw, label: 'GitHub raw' },
+        { url: jsd, label: 'jsDelivr mirror' }
+      ];
+      var i = 0;
+      function next() {
+        if (i >= sources.length) {
+          if (statusEl) statusEl.textContent = 'Couldn’t play inline — use the GitHub link.';
+          resolve(false);
+          return;
+        }
+        var s = sources[i++];
+        if (statusEl) statusEl.textContent = 'Loading via ' + s.label + '…';
+        var onOk = function () {
+          cleanup();
+          if (statusEl) statusEl.textContent = 'Playing via ' + s.label + '.';
+          resolve(true);
+        };
+        var onErr = function () { cleanup(); next(); };
+        var cleanup = function () {
+          video.removeEventListener('loadeddata', onOk);
+          video.removeEventListener('error', onErr);
+        };
+        video.addEventListener('loadeddata', onOk, { once: true });
+        video.addEventListener('error', onErr, { once: true });
+        video.src = s.url;
+        video.load();
+      }
+      next();
+    });
+  }
+
+  // Featured Day 6
+  var day6 = document.getElementById('day6-video');
+  if (day6) {
+    trySources(day6, day6.dataset.srcRaw, day6.dataset.srcJsd, null);
+  }
+
+  var backdrop = document.getElementById('player');
+  var pvid = document.getElementById('player-video');
+  var ptitle = document.getElementById('player-title');
+  var pgh = document.getElementById('player-gh');
+  var pstatus = document.getElementById('player-status');
+  var pclose = document.getElementById('player-close');
+
+  function openPlayer(card) {
+    ptitle.textContent = card.dataset.title;
+    pgh.href = card.dataset.gh;
+    pvid.poster = card.dataset.poster || '';
+    pstatus.textContent = '';
+    backdrop.hidden = false;
+    backdrop.classList.add('open');
+    trySources(pvid, card.dataset.srcRaw, card.dataset.srcJsd, pstatus).then(function (ok) {
+      if (ok) { try { pvid.play(); } catch (e) {} }
+    });
+  }
+  function closePlayer() {
+    pvid.pause();
+    pvid.removeAttribute('src');
+    pvid.load();
+    backdrop.classList.remove('open');
+    backdrop.hidden = true;
+  }
+  document.querySelectorAll('.lab-card').forEach(function (card) {
+    card.addEventListener('click', function () { openPlayer(card); });
+  });
+  pclose.addEventListener('click', closePlayer);
+  backdrop.addEventListener('click', function (e) {
+    if (e.target === backdrop) closePlayer();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && backdrop.classList.contains('open')) closePlayer();
+  });
+})();
+</script>
 <script>
   document.querySelectorAll('.copy').forEach(function (btn) {
     btn.addEventListener('click', function () {
