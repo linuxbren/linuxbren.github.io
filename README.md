@@ -1,9 +1,11 @@
 # linuxbren.github.io
 
 Personal site: retro-styled tools for Omarchy ([console-places](https://github.com/linuxbren/console-places),
-[flyover](https://github.com/linuxbren/flyover), [flyover-pill](https://github.com/linuxbren/flyover-pill)).
-One static `index.html`, plain HTML/CSS plus a few lines of JS for the copy
-buttons, no build step. Served by GitHub Pages from `master`.
+[flyover](https://github.com/linuxbren/flyover), [flyover-pill](https://github.com/linuxbren/flyover-pill))
+plus [Caravan](https://github.com/linuxbren/caravan) (local AI across two Mac
+minis). Static HTML (`index.html` + `caravan.html`), plain HTML/CSS plus a few
+lines of JS for the copy buttons, no build step. Served by GitHub Pages from
+`master`.
 
 Live at https://linuxbren.github.io.
 
@@ -18,12 +20,15 @@ covers websites only; other code waits for his OK before pushing.)
 
 - **Nav:** `linuxbren ✈` wordmark; tools · hangar · about · github ↗.
 - **Hero:** prompt line, h1 "Retro tools for Omarchy.", lede, two buttons.
-- **Toolbox (`#tools`):** a three-column grid (`auto-fit, minmax(300px, 1fr)`;
-  one column on phones) of equal cards, in this order: console-places, flyover, flyover-pill.
+- **Toolbox (`#tools`):** a responsive grid (`auto-fit, minmax(300px, 1fr)`;
+  one column on phones) of equal cards, in this order: console-places, flyover,
+  flyover-pill, caravan.
   Each card leads with its own kind of shot:
   - console-places: a 16:10 terminal window with one screenshot
   - flyover: a round radar, a live looping clip in a circular mask, max 300px
   - flyover-pill: a 72px bar strip with the pill at actual size
+  - caravan: a 16:9 lab still (layer-split diagram); the card links to
+    `caravan.html`
 
   Then the name, a version/language chip, a one-paragraph pitch, the install
   command with a copy button, and links. Long per-tool detail lives in each
@@ -57,6 +62,12 @@ Everything in `assets/` is loaded by `index.html`:
 | `flyover-ascii-demo.webm` | flyover's round radar (looping Braille-mode clip, 480×508) |
 | `flyover-ascii.webp` | poster frame for that clip |
 | `pill.webp` | flyover-pill bar strip (540×60, shown at actual size) |
+| `caravan-hero.webp` | caravan index card (layer-split still from Day 6 v12) |
+| `caravan-day6-v12.mp4` | Day 6 lab video on `caravan.html` (~2.2 MB, 1920×1080) |
+| `caravan-day6-poster.webp` | poster frame for that video |
+
+`caravan.html` is the project page: pitch, measured numbers (sourced from the
+Caravan repo docs), Day 6 video, status, clone command.
 
 Screenshots from other repos are converted with
 `magick in.png -resize 1200x -quality 82 -define webp:method=6 out.webp`.

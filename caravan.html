@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caravan — linuxbren</title>
+<meta name="description" content="Caravan splits one local AI model across two Mac minis. OpenAI-compatible, keeps each chat's memory warm across restarts, GGUF and MLX. Early, experimental — v3.4.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://linuxbren.github.io/caravan.html">
+<meta property="og:title" content="Caravan — one model across two Mac minis">
+<meta property="og:description" content="Open-source local AI serving: split a model across two Apple Silicon Macs, keep chat memory warm, GGUF and MLX through one entry point.">
+<meta property="og:image" content="https://linuxbren.github.io/assets/caravan-day6-poster.webp">
+<meta name="theme-color" content="#0b0c16">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9992;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c16;
+    --panel: #11132a;
+    --deep: #07080f;
+    --fg: #ddf7ff;
+    --dim: #8fa8b3;
+    --accent: #82fb9c;
+    --link: #7fd7ff;
+    --border: #2d3450;
+    --display: 'Chakra Petch', 'JetBrains Mono', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', 'Fira Code', monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background: repeating-linear-gradient(to bottom, rgba(0,0,0,0.15) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+    opacity: 0.45;
+  }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: inherit; background: var(--deep); padding: 1px 6px; border-radius: 3px; border: 1px solid var(--border); font-size: 0.92em; }
+  strong { font-weight: 700; color: var(--fg); }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  nav.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .wordmark {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: 0.02em;
+    color: var(--fg);
+  }
+  .wordmark:hover { text-decoration: none; }
+  .wordmark span { color: var(--accent); }
+  nav.top ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 6px 20px;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+  nav.top ul a { color: var(--dim); }
+  nav.top ul a:hover,
+  nav.top ul a.active { color: var(--accent); text-decoration: none; }
+
+  .hero { padding: 64px 0 48px; }
+  .prompt { color: var(--dim); font-size: 0.88rem; margin-bottom: 14px; }
+  .prompt b { color: var(--accent); font-weight: 500; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    text-shadow: 0 0 18px rgba(130, 251, 156, 0.18);
+  }
+  .lede { color: var(--dim); font-size: 1.05rem; max-width: 58ch; margin: 0; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn {
+    display: inline-block;
+    padding: 11px 20px;
+    border-radius: 4px;
+    border: 1px solid var(--accent);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn.fill { background: var(--accent); color: var(--deep); }
+  .btn.fill:hover { box-shadow: 0 0 16px rgba(130, 251, 156, 0.4); }
+  .btn.line { color: var(--accent); }
+  .btn.line:hover { background: rgba(130, 251, 156, 0.08); }
+
+  .meta-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+  .chip {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 2px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    white-space: nowrap;
+  }
+  .chip.hot {
+    color: var(--accent);
+    border-color: rgba(130, 251, 156, 0.4);
+  }
+
+  section { padding: 40px 0; }
+  .label {
+    color: var(--dim);
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+  }
+  .label::before { content: "# "; color: var(--border); }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.55rem;
+    margin: 0 0 14px;
+    color: var(--fg);
+  }
+  .prose { max-width: 68ch; color: var(--dim); }
+  .prose p { margin: 0 0 14px; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 24px;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .stat .num {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--accent);
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+  .stat p {
+    margin: 0;
+    color: var(--dim);
+    font-size: 0.86rem;
+  }
+  .stat .src {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.72rem;
+    color: var(--border);
+  }
+
+  .video-wrap {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .video-wrap video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+  .video-cap {
+    margin: 12px 0 0;
+    color: var(--dim);
+    font-size: 0.86rem;
+    max-width: 68ch;
+  }
+
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .role {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    background: var(--deep);
+  }
+  .role h3 {
+    margin: 0 0 6px;
+    font-size: 0.95rem;
+    color: var(--accent);
+  }
+  .role p { margin: 0; color: var(--dim); font-size: 0.84rem; }
+
+  .cmd {
+    display: flex;
+    align-items: flex-start;
+    margin: 16px 0 0;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .cmd pre {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    padding: 11px 13px;
+    overflow-x: auto;
+    font: inherit;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+  .copy {
+    flex: none;
+    margin: 6px 6px 6px 0;
+    font: inherit;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--dim);
+    cursor: pointer;
+  }
+  .copy:hover { color: var(--accent); border-color: var(--accent); }
+
+  .links { display: flex; gap: 6px 16px; flex-wrap: wrap; margin-top: 18px; font-size: 0.9rem; }
+
+  .note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--accent);
+    background: rgba(130, 251, 156, 0.06);
+    color: var(--dim);
+    font-size: 0.88rem;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+    padding: 28px 0 48px;
+    color: var(--dim);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--dim); }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 0 16px; }
+    .hero { padding: 48px 0 36px; }
+    section { padding: 32px 0; }
+    .panel { padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <nav class="top">
+    <a class="wordmark" href="index.html">linuxbren <span>✈&#xFE0E;</span></a>
+    <ul>
+      <li><a href="index.html#tools">tools</a></li>
+      <li><a class="active" href="caravan.html">caravan</a></li>
+      <li><a href="index.html#hangar">hangar</a></li>
+      <li><a href="index.html#about">about</a></li>
+      <li><a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">github ↗</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="prompt"><b>bren@mac-minis</b> ~ $ ./caravan --status</div>
+    <h1>One model.<br>Two Mac minis.</h1>
+    <p class="lede">Caravan is the layer between your chat client and the model servers on a small group of Apple Silicon Macs. When a model won’t fit on one 24&nbsp;GB mini, it splits the layers across both — over a Thunderbolt cable — and keeps each conversation’s memory warm so the next message doesn’t re-read the whole chat.</p>
+    <div class="meta-row">
+      <span class="chip hot">v3.4</span>
+      <span class="chip">branch caravan-v3-mlx-split</span>
+      <span class="chip">early · experimental</span>
+      <span class="chip">Apple Silicon</span>
+    </div>
+    <div class="cta">
+      <a class="btn fill" href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">github.com/linuxbren/caravan</a>
+      <a class="btn line" href="#day6">Watch Day 6</a>
+    </div>
+  </header>
+
+  <section id="what">
+    <div class="label">what it does</div>
+    <div class="panel prose">
+      <p>Point an OpenAI-compatible client at Caravan’s proxy. It routes each request to <strong>llama.cpp</strong> for GGUF models (the common packed weights you get from Ollama and friends) or to Caravan’s own <strong>MLX</strong> worker (Apple’s local-AI stack) based on the model name. Requests run one at a time. Each chat is recognized by a fingerprint of its first real message, so its cache is reused from turn to turn and saved to disk — it comes back after a restart.</p>
+      <p>When the model is split, the <strong>lead</strong> is the Mac you talk to: it serves the API, runs the last layers, and picks each token. The other Mac is a <strong>packer</strong> — it runs the first layers. The whole group is the <strong>string</strong>.</p>
+      <div class="roles">
+        <div class="role">
+          <h3>lead</h3>
+          <p>The Mini you talk to. API, last layers, picks the next token.</p>
+        </div>
+        <div class="role">
+          <h3>packer</h3>
+          <p>Runs the first layers and ships the hidden state over Thunderbolt.</p>
+        </div>
+        <div class="role">
+          <h3>string</h3>
+          <p>The whole group. Today: two M4 minis, 24&nbsp;GB each.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="numbers">
+    <div class="label">measured on the lab minis</div>
+    <p class="prose" style="margin:0 0 18px">All numbers below are measured on two Mac mini M4s with 24&nbsp;GB each. “tok/s” means tokens per second — roughly how fast it writes a reply, or how fast it reads a prompt. Full tables live in the repo’s <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/BENCHMARKS.md" target="_blank" rel="noopener">BENCHMARKS.md</a>.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">19 → 10 GB</div>
+        <p>Peak memory per Mini for Qwen3 30B on MLX: whole model on one Mac vs split across two. Gemma 4 17→9 GB, GPT-OSS 13→7 GB. A 16k-token Qwen3 chat that used to run out of memory now fits.</p>
+        <span class="src">README · BENCHMARKS v2.1 vs v3</span>
+      </div>
+      <div class="stat">
+        <div class="num">~1.6×</div>
+        <p>Two chats overlapped on the split: while one Mini works on chat A, the other works on chat B. Wall writing across chats rises about 1.6× (Qwen3 44→73, Gemma 37→61, GPT-OSS 34→54 tok/s). A single chat on its own isn’t faster.</p>
+        <span class="src">BENCHMARKS idea 1 · Day 6 lab</span>
+      </div>
+      <div class="stat">
+        <div class="num">~4 s → ~0.6 s</div>
+        <p>Wait before the first word for a third chat, before and after the fair turn-order fix. Quality checks still 3/3.</p>
+        <span class="src">BENCHMARKS idea 1 · experiments.md Day 6</span>
+      </div>
+      <div class="stat">
+        <div class="num">+28–50%</div>
+        <p>Writing speed on the split with GPU keepalive on (default): Gemma 27.7→38.3, GPT-OSS 26.6→34.1, Qwen3 30.4→45.6 tok/s. The idle wait was cooling Metal; a tiny keep-awake during the cable wait fixes it.</p>
+        <span class="src">BENCHMARKS keepalive · CHANGELOG v3.2</span>
+      </div>
+      <div class="stat">
+        <div class="num">46 s → 0.65 s</div>
+        <p>A 16k GPT-OSS chat after a full restart on llama.cpp, once checkpoints land in the slot files (Gemma 56→0.93 s). On MLX, turn 2 of a 4k chat drops from ~10 s to about half a second.</p>
+        <span class="src">README · CHANGELOG v1 / v2</span>
+      </div>
+      <div class="stat">
+        <div class="num">7–11 min → 29–39 s</div>
+        <p>Packer cold load of a big GGUF over Thunderbolt vs LAN. With <code>rpc-server --cache</code>, a warm restart lands around 53 s instead of another long copy.</p>
+        <span class="src">README · BENCHMARKS two Macs RPC</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="day6">
+    <div class="label">lab video · day 6</div>
+    <h2>Several chats at once</h2>
+    <p class="prose" style="margin:0 0 16px">The current Day 6 cut (v12). One model split across two minis; two chats keep both GPUs busy; a fairer schedule for a third. About a minute.</p>
+    <div class="video-wrap">
+      <video controls preload="metadata" poster="assets/caravan-day6-poster.webp" playsinline>
+        <source src="assets/caravan-day6-v12.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="video-cap">Also on GitHub: <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4" target="_blank" rel="noopener">handoff/lab/videos/…_v12.mp4</a>. Earlier Day 4 (MLX split) and Day 5 (keepalive) cuts live in the same folder.</p>
+  </section>
+
+  <section id="status">
+    <div class="label">status</div>
+    <div class="panel prose">
+      <p><strong>Early and experimental.</strong> <code>main</code> is v2.1. The two-Mac MLX split is on <code>caravan-v3-mlx-split</code>, latest tag <strong>v3.4</strong>, waiting for review — not merged yet. It runs one personal assistant on a pair of M4 minis (24&nbsp;GB each). It isn’t packaged, and it hasn’t been tested on other setups. The launchd plists still contain machine-specific paths.</p>
+      <p>The split itself is started by hand today; the agent and launchd still bring up a one-Mac MLX worker. Writing on the split is still slower than one Mac for a single chat (worth it when the model or the long chat doesn’t fit). Next up on the roadmap: guess-ahead decoding.</p>
+      <div class="cmd"><pre>git clone https://github.com/linuxbren/caravan
+cd caravan && git checkout caravan-v3-mlx-split</pre><button class="copy" type="button">copy</button></div>
+      <div class="links">
+        <a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">source →</a>
+        <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/ROADMAP.md" target="_blank" rel="noopener">roadmap →</a>
+        <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/BENCHMARKS.md" target="_blank" rel="noopener">benchmarks →</a>
+        <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/CHANGELOG.md" target="_blank" rel="noopener">changelog →</a>
+      </div>
+      <div class="note">Only measured numbers from the repo docs are on this page. If a figure isn’t in README / ROADMAP / BENCHMARKS / CHANGELOG / the lab experiments log, it isn’t here.</div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="index.html">linuxbren.github.io</a> · <a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">github.com/linuxbren/caravan</a>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.parentElement.querySelector('pre').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'copied';
+        setTimeout(function () { btn.textContent = 'copy'; }, 1400);
+      }, function () {
+        btn.textContent = 'select it';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
