@@ -2,10 +2,13 @@
 
 Personal site: retro-styled tools for Omarchy ([console-places](https://github.com/linuxbren/console-places),
 [flyover](https://github.com/linuxbren/flyover), [flyover-pill](https://github.com/linuxbren/flyover-pill))
-plus [Caravan](https://github.com/linuxbren/caravan) (local AI across two Mac
-minis). Static HTML (`index.html` + `caravan.html`), plain HTML/CSS plus a few
-lines of JS for the copy buttons, no build step. Served by GitHub Pages from
-`master`.
+plus [Caravan](https://github.com/linuxbren/caravan) (run AI models on your
+own Macs, together). Static HTML (`index.html` + `caravan.html`), plain
+HTML/CSS plus a few lines of JS for the copy buttons, no build step. Served
+by GitHub Pages from `master`. The Caravan page uses the app's Campfire
+theme (SVG night sky, moon, stars, tree line, and a low fire); the rest of
+the site keeps the Hackerman toolbox look, with a Campfire accent on the
+index card.
 
 Live at https://linuxbren.github.io.
 
@@ -31,7 +34,8 @@ covers websites only; other code waits for his OK before pushing.)
   command with a copy button, and links. Long per-tool detail lives in each
   tool's README, not here.
 - **Caravan (`#caravan`):** its own spotlight section (not in the Omarchy
-  toolbox), linking to `caravan.html`. Wide card with a 16:9 lab still.
+  toolbox), linking to `caravan.html`. Wide card with a 16:9 Campfire still
+  and an amber accent, so it sits apart from the green toolbox cards.
 - **In the hangar (`#hangar`):** dashed "soon" cards for upcoming projects.
 - **About (`#about`)** strip with interest chips, then the footer.
 
@@ -61,16 +65,18 @@ Everything in `assets/` is loaded by `index.html`:
 | `flyover-ascii-demo.webm` | flyover's round radar (looping Braille-mode clip, 480×508) |
 | `flyover-ascii.webp` | poster frame for that clip |
 | `pill.webp` | flyover-pill bar strip (540×60, shown at actual size) |
-| `caravan-hero.webp` | caravan spotlight still (layer-split diagram from Day 6 v12) |
-| `caravan-day6-poster.webp` | featured Day 6 poster |
-| `caravan-lab/v1.webp` … `v12.webp` | small posters for the lab video library (~90 KB total) |
+| `caravan-campfire.webp` | caravan spotlight still and Caravan page `og:image` (Campfire scenery, 1200×675) |
+| `caravan-hero.webp` | earlier layer-split diagram (kept, no longer used on the live cards) |
+| `caravan-day6-poster.webp` | featured Day 6 poster on the Caravan page |
+| `caravan-lab/v1.webp` … `v12.webp` | small posters for the early lab video library (~90 KB total) |
 
-`caravan.html` is the project page: pitch, measured numbers (sourced from the
-Caravan repo docs), featured Day 6 player, lab video library, status, clone
-command. Lab mp4s are **not** stored here — they stream from the public
-`linuxbren/caravan` repo (`raw.githubusercontent.com`, with a jsDelivr
-`video/mp4` fallback). Superseded cuts (v5, v7, v10, v11) sit in a collapsed
-details block.
+`caravan.html` is the project page, in the Campfire theme: pitch, what's in
+it now, the current install command (must match the Caravan README), what's
+next, a featured early lab video plus a link to the later Day 18 tour,
+the lab video library, and status. Lab mp4s are **not** stored here — they
+stream from the public `linuxbren/caravan` repo (`raw.githubusercontent.com`,
+with a jsDelivr `video/mp4` fallback). Superseded cuts (v5, v7, v10, v11)
+sit in a collapsed details block.
 
 Screenshots from other repos are converted with
 `magick in.png -resize 1200x -quality 82 -define webp:method=6 out.webp`.
