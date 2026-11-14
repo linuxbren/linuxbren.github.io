@@ -214,6 +214,9 @@
   .prose { max-width: 68ch; color: var(--muted); }
   .prose p { margin: 0 0 14px; }
   .prose p:last-child { margin-bottom: 0; }
+  .prose ul { margin: 0 0 14px; padding-left: 1.2em; }
+  .prose li { margin: 0 0 8px; }
+  .prose li:last-child { margin-bottom: 0; }
 
   .panel, .stat, .role, .video-wrap, .lab-card, .player-box, details.lab-old {
     background: var(--bg2);
@@ -679,6 +682,7 @@
     <ul>
       <li><a href="index.html#tools">tools</a></li>
       <li><a class="active" href="caravan.html">caravan</a></li>
+      <li><a href="#new">new</a></li>
       <li><a href="#lab">lab</a></li>
       <li><a href="index.html#hangar">hangar</a></li>
       <li><a href="index.html#about">about</a></li>
@@ -734,8 +738,27 @@
         <h3>Keeps models safe</h3>
         <p>A memory and garble check watches for bad output and settings that don’t actually help. Download progress shows up right under the model you clicked.</p>
       </div>
+      <div class="stat" style="grid-column: 1 / -1">
+        <h3>Updates every Mac</h3>
+        <p>Caravan checks for a new version once a day. Click <strong>Update now</strong> on the 1st Mac and it updates the 2nd Mac first, then itself. A flickering <strong>Updating…</strong> button shows each step, and the page reloads itself when it’s done.</p>
+      </div>
     </div>
     <p class="prose" style="margin:16px 0 0">Under Advanced, a GGUF model can also use <strong>Prompt lookup</strong> and <strong>Guess-ahead</strong>. Guess-ahead only turns on if a smaller model of the same kind is already downloaded; Caravan will not download one for you.</p>
+  </section>
+
+  <section id="new">
+    <div class="label">new in day 26</div>
+    <div class="panel prose">
+      <ul>
+        <li><strong>Updates from the page.</strong> An <strong>Update available</strong> badge, <strong>Check now</strong> in Settings, and <code>caravan update --check</code> in Terminal. <strong>Update now</strong> works on the Mac itself and through Tailscale. On your local network there’s no login, so the page doesn’t offer updates there; use <code>caravan update</code> in Terminal.</li>
+        <li><strong>One line per Mac.</strong> “1st Mac: current”, “2nd Mac: update needed”, or “failed” with a <strong>Try again</strong> button. Nothing more to read.</li>
+        <li><strong>See it working.</strong> The same campfire flicker as Auto-tune, a step line that counts up (“Updating the 2nd Mac… 0:42”), “restarting” while the Mac comes back, then <strong>Done</strong>. Every open Caravan tab reloads itself to the new version.</li>
+        <li><strong>Download progress</strong> sits right under the model you clicked.</li>
+        <li><strong>Clearer race chart.</strong> In <code>caravan bench</code>, a shorter First token bar now means a sooner reply. Each race is saved, and <code>--from-averages</code> shows the last one.</li>
+        <li><strong>GGUF speed-ups</strong> under Advanced: Prompt lookup and Guess-ahead, each Auto, Off, or On.</li>
+      </ul>
+      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/DAY26.md" target="_blank" rel="noopener">The full Day 26 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
+    </div>
   </section>
 
   <section id="install">
@@ -753,8 +776,16 @@
   <section id="ahead">
     <div class="label">what’s next</div>
     <div class="panel prose">
-      <p><strong>Voice, starting with listening.</strong> The plan is a microphone next to Send, with the words appearing in the chat box so you can edit them before they go. Spoken replies wait until listening feels right. Design notes are in the repo; there’s nothing to try in the app yet.</p>
-      <p>Later: vision models, a security review, FileVault and separate-account testing, and support for more than two Macs.</p>
+      <p>Ideas for Day 27:</p>
+      <ul>
+        <li><strong>Faster guessing, measured.</strong> Try Guess-ahead on real chats and show how many guessed words were kept, then keep only what really helps.</li>
+        <li><strong>GGUF closer to MLX</strong> in reading, writing, and first-token speed.</li>
+        <li><strong>A beginner switch</strong> that tucks the Advanced settings away.</li>
+        <li><strong>Vision and voice</strong>, starting with listening: a microphone next to Send, with the words appearing in the chat box so you can edit them. Design notes are in the repo.</li>
+        <li><strong>A terminal UI</strong> for chat, status, and updates.</li>
+        <li><strong>Fresh-install and FileVault testing</strong>, and a <strong>security review</strong>.</li>
+      </ul>
+      <p>See the <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/ROADMAP.md" target="_blank" rel="noopener">roadmap</a>.</p>
     </div>
   </section>
 

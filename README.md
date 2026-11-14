@@ -71,7 +71,8 @@ Everything in `assets/` is loaded by `index.html`:
 | `caravan-lab/v1.webp` … `v12.webp` | small posters for the early lab video library (~90 KB total) |
 
 `caravan.html` is the project page, in the Campfire theme: pitch, what's in
-it now, the current install command (must match the Caravan README), what's
+it now (including an "Updates every Mac" card), a "new in day 26" list
+(`#new`), the current install command (must match the Caravan README), what's
 next, a featured early lab video plus a link to the later Day 18 tour,
 the lab video library, and status. Lab mp4s are **not** stored here — they
 stream from the public `linuxbren/caravan` repo (`raw.githubusercontent.com`,
