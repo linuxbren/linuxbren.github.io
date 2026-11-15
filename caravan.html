@@ -694,7 +694,7 @@
     <h1>Run AI models on your own Macs, together.</h1>
     <p class="lede">Caravan splits big models across two Macs, tunes itself for speed, and gives you a simple chat page you can open from anywhere. Open source, MLX and GGUF.</p>
     <div class="meta-row">
-      <span class="chip hot">Day 26</span>
+      <span class="chip hot">Day 27</span>
       <span class="chip">open source</span>
       <span class="chip">MLX and GGUF</span>
       <span class="chip">Apple Silicon</span>
@@ -747,17 +747,17 @@
   </section>
 
   <section id="new">
-    <div class="label">new in day 26</div>
+    <div class="label">new in day 27</div>
     <div class="panel prose">
       <ul>
-        <li><strong>Updates from the page.</strong> An <strong>Update available</strong> badge, <strong>Check now</strong> in Settings, and <code>caravan update --check</code> in Terminal. <strong>Update now</strong> works on the Mac itself and through Tailscale. On your local network there’s no login, so the page doesn’t offer updates there; use <code>caravan update</code> in Terminal.</li>
-        <li><strong>One line per Mac.</strong> “1st Mac: current”, “2nd Mac: update needed”, or “failed” with a <strong>Try again</strong> button. Nothing more to read.</li>
-        <li><strong>See it working.</strong> The same campfire flicker as Auto-tune, a step line that counts up (“Updating the 2nd Mac… 0:42”), “restarting” while the Mac comes back, then <strong>Done</strong>. Every open Caravan tab reloads itself to the new version.</li>
-        <li><strong>Download progress</strong> sits right under the model you clicked.</li>
-        <li><strong>Clearer race chart.</strong> In <code>caravan bench</code>, a shorter First token bar now means a sooner reply. Each race is saved, and <code>--from-averages</code> shows the last one.</li>
-        <li><strong>GGUF speed-ups</strong> under Advanced: Prompt lookup and Guess-ahead, each Auto, Off, or On.</li>
+        <li><strong>Guesses kept.</strong> When a reply used Prompt lookup or Guess-ahead, the line under it ends with how many guessed words were kept, for example “guesses kept 88%”.</li>
+        <li><strong>Faster GGUF writing.</strong> On the 1st Mac, Qwen2.5 Coder 7B GGUF with a small 0.5B helper wrote at 29.9 tok/s on short chats (+34%) and 42.9 on code edits (+93%), ahead of MLX at 23.4. Auto-tune measured +25% and kept Guess-ahead.</li>
+        <li><strong>A helper only if you say yes.</strong> If a known small helper isn’t on this Mac, Settings offers it in one line under the model. Nothing downloads without a yes.</li>
+        <li><strong><code>caravan bench --speedups</code></strong> measures Off, Prompt lookup, Guess-ahead, and Auto on short chats, code edits, and long prompts.</li>
+        <li><strong>Clearer Auto-tune.</strong> Cancel shows Cancelling…, then a plain cancelled line. Applying a setting while it runs offers one “Cancel Auto-tune and apply” action. Buttons show a busy word and a result.</li>
+        <li><strong>One-Mac Topology.</strong> With only one live Mac, Balance and Thunderbolt are hidden. A Mac whose Caravan is off shows as offline, with a grey light.</li>
       </ul>
-      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/DAY26.md" target="_blank" rel="noopener">The full Day 26 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
+      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/DAY27.md" target="_blank" rel="noopener">The full Day 27 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
     </div>
   </section>
 
@@ -776,14 +776,13 @@
   <section id="ahead">
     <div class="label">what’s next</div>
     <div class="panel prose">
-      <p>Ideas for Day 27:</p>
+      <p>Day 28 is a speed test on one Mac, then with the model split across two Macs:</p>
       <ul>
-        <li><strong>Faster guessing, measured.</strong> Try Guess-ahead on real chats and show how many guessed words were kept, then keep only what really helps.</li>
-        <li><strong>GGUF closer to MLX</strong> in reading, writing, and first-token speed.</li>
-        <li><strong>A beginner switch</strong> that tucks the Advanced settings away.</li>
-        <li><strong>Vision and voice</strong>, starting with listening: a microphone next to Send, with the words appearing in the chat box so you can edit them. Design notes are in the repo.</li>
-        <li><strong>A terminal UI</strong> for chat, status, and updates.</li>
-        <li><strong>Fresh-install and FileVault testing</strong>, and a <strong>security review</strong>.</li>
+        <li><strong>The same models</strong> on each tool: Qwen3 30B-A3B, gpt-oss 20B, and Llama 3.1 8B.</li>
+        <li><strong>Caravan, LocalAI, Exo, and llama.cpp rpc-server,</strong> plus Caravan v0 numbers against current Caravan.</li>
+        <li><strong>A video</strong> of the results.</li>
+        <li><strong>Day 29</strong> compares Caravan on llama.cpp b12283 with a llama.cpp v1.0.0 nightly.</li>
+        <li><strong>TensorFold</strong> is a later test day.</li>
       </ul>
       <p>See the <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/docs/ROADMAP.md" target="_blank" rel="noopener">roadmap</a>.</p>
     </div>
@@ -915,7 +914,7 @@
     <div class="label">status</div>
     <div class="panel prose">
       <p><strong>Early and experimental.</strong> Caravan has been tried on two Macs. The easy install still needs more testing on a fresh account and with FileVault. It is not a signed Mac app.</p>
-      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest tag is <a href="https://github.com/linuxbren/caravan/releases/tag/day25-2026-11-12" target="_blank" rel="noopener">Day 25</a> (November 12, 2026). Day 26 is already on the install branch and will be tagged once it’s been tried. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
+      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest tag is <a href="https://github.com/linuxbren/caravan/releases/tag/day27-2026-11-15" target="_blank" rel="noopener">Day 27</a> (November 15, 2026). Day 26 is also tagged. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
       <div class="links">
         <a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">source →</a>
         <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/INSTALL.md" target="_blank" rel="noopener">install help →</a>
