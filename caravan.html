@@ -11,7 +11,9 @@
 <meta property="og:description" content="Caravan splits big models across two Macs, tunes itself for speed, and gives you a simple chat page you can open from anywhere. Open source, MLX and GGUF.">
 <meta property="og:image" content="https://linuxbren.github.io/assets/caravan-campfire.webp">
 <meta name="theme-color" content="#0b1730">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9992;</text></svg>">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -682,10 +684,9 @@
     <ul>
       <li><a href="index.html#tools">tools</a></li>
       <li><a class="active" href="caravan.html">caravan</a></li>
+      <li><a href="journey.html">journey</a></li>
       <li><a href="#new">new</a></li>
       <li><a href="#lab">lab</a></li>
-      <li><a href="index.html#hangar">hangar</a></li>
-      <li><a href="index.html#about">about</a></li>
       <li><a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">github ↗</a></li>
     </ul>
   </nav>
@@ -788,10 +789,21 @@
     </div>
   </section>
 
+
+  <section id="journey">
+    <div class="label">the journey</div>
+    <h2>Day 1 through Day 27</h2>
+    <p class="prose" style="margin:0 0 16px">Every Day video that has a public copy, grouped into chapters, plus the speed pictures from the lab. The newest chapter starts open; the rest start closed.</p>
+    <div class="cta" style="margin-top:0">
+      <a class="btn fill" href="journey.html">Open the Journey</a>
+      <a class="btn line" href="journey.html#speed">Speed over time</a>
+    </div>
+  </section>
+
   <section id="watch">
     <div class="label">a look at the lab</div>
     <h2>Building Caravan in the open</h2>
-    <p class="prose" style="margin:0 0 16px">An early lab cut from Day 6: one model split across two Macs, with more than one chat keeping both busy. About a minute. A later <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-08_caravan-v3-day18-ui-tour_v25.mp4" target="_blank" rel="noopener">Day 18 tour of the chat page</a> is in the repo too. Videos stream from the public Caravan repo — nothing big is hosted on this site.</p>
+    <p class="prose" style="margin:0 0 16px">An early lab cut from Day 6: one model split across two Macs, with more than one chat keeping both busy. About a minute. A later <a href="https://github.com/linuxbren/caravan/blob/caravan-v3-mlx-split/handoff/lab/videos/2026-11-08_caravan-v3-day18-ui-tour_v25.mp4" target="_blank" rel="noopener">Day 18 tour of the chat page</a> is in the repo too. The full run, Day 1 through today, is on the <a href="journey.html">Journey</a> page. Videos stream from the public Caravan repo — nothing big is hosted on this site.</p>
     <div class="video-wrap">
       <video id="day6-video" controls preload="metadata" poster="assets/caravan-day6-poster.webp" playsinline
         data-src-raw="https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/handoff/lab/videos/2026-11-01_caravan-v3-several-chats_v12.mp4"
