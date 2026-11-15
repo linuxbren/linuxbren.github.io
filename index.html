@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>linuxbren</title>
+<title>linuxbren — layout mock 1, split hero</title>
 <meta name="description" content="linuxbren — retro tools for Omarchy (console-places, flyover, flyover-pill), and Caravan: run AI models on your own Macs, together.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://linuxbren.github.io/">
-<meta property="og:title" content="linuxbren — retro tools for Omarchy">
-<meta property="og:description" content="Terminal-native tools for Omarchy, and Caravan for running AI models on your own Macs.">
 <meta name="theme-color" content="#0b0c16">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9992;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +21,8 @@
     --link: #7fd7ff;
     --border: #2d3450;
     --display: 'Chakra Petch', 'JetBrains Mono', sans-serif;
+    --warm: #e0924a;
+    --warm2: #f0c48a;
   }
 
   * { box-sizing: border-box; }
@@ -40,7 +38,6 @@
     overflow-x: hidden;
   }
 
-  /* faint CRT scanlines */
   body::before {
     content: "";
     position: fixed;
@@ -61,8 +58,6 @@
     margin: 0 auto;
     padding: 0 24px;
   }
-
-  /* ---------------- nav ---------------- */
 
   nav.top {
     display: flex;
@@ -94,21 +89,46 @@
   nav.top ul a { color: var(--dim); }
   nav.top ul a:hover { color: var(--accent); text-decoration: none; }
 
-  /* ---------------- hero ---------------- */
-
-  .hero { padding: 72px 0 64px; }
-  .prompt { color: var(--dim); font-size: 0.88rem; margin-bottom: 14px; }
+  .split-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 48px 0 24px;
+  }
+  .hero-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px 26px 24px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-panel.ai {
+    border-color: rgba(232, 176, 120, 0.38);
+    box-shadow: 0 12px 40px rgba(0, 0, 10, 0.25), 0 16px 36px rgba(224, 120, 40, 0.06);
+  }
+  .prompt { color: var(--dim); font-size: 0.82rem; margin: 0 0 14px; }
   .prompt b { color: var(--accent); font-weight: 500; }
-  h1 {
+  .hero-panel.ai .prompt b { color: var(--warm2); }
+  .hero-panel h2 {
     font-family: var(--display);
     font-weight: 700;
-    font-size: clamp(2.3rem, 6.5vw, 4rem);
-    line-height: 1.05;
-    margin: 0 0 18px;
+    font-size: clamp(1.85rem, 4.2vw, 2.7rem);
+    line-height: 1.08;
+    margin: 0 0 14px;
     text-shadow: 0 0 18px rgba(130, 251, 156, 0.18);
   }
-  .lede { color: var(--dim); font-size: 1.05rem; max-width: 52ch; margin: 0; }
-  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+  .hero-panel.ai h2 { text-shadow: 0 0 18px rgba(224, 146, 74, 0.22); }
+  .hero-panel .lede {
+    color: var(--dim);
+    font-size: 0.98rem;
+    margin: 0;
+    max-width: 42ch;
+  }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; padding-top: 26px; }
   .btn {
     display: inline-block;
     padding: 11px 20px;
@@ -122,10 +142,16 @@
   .btn.fill:hover { box-shadow: 0 0 16px rgba(130, 251, 156, 0.4); }
   .btn.line { color: var(--accent); }
   .btn.line:hover { background: rgba(130, 251, 156, 0.08); }
-
-  /* ---------------- sections ---------------- */
+  .btn.warm {
+    background: var(--warm);
+    color: #121000;
+    border-color: var(--warm);
+  }
+  .btn.warm:hover { box-shadow: 0 0 16px rgba(224, 146, 74, 0.4); }
 
   section { padding: 48px 0; }
+  #omarchy, #ai, #hangar, #about { scroll-margin-top: 16px; }
+
   .label {
     color: var(--dim);
     font-size: 0.82rem;
@@ -134,8 +160,6 @@
     margin: 0 0 20px;
   }
   .label::before { content: "# "; color: var(--border); }
-
-  /* ---------------- toolbox ---------------- */
 
   .tools {
     display: grid;
@@ -150,10 +174,6 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-  }
-  /* the whole card links to the repo: the title's ::after stretches over it,
-     and the inner links, code box and copy button sit above that overlay */
-  .tool {
     position: relative;
     cursor: pointer;
     transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
@@ -184,7 +204,6 @@
 
   .shot { margin: 0 0 18px; }
 
-  /* console-places: a 16:10 terminal window */
   .shot.window {
     aspect-ratio: 16 / 10;
     display: flex;
@@ -216,7 +235,6 @@
     display: block;
   }
 
-  /* flyover: a round radar scope */
   .shot.radar {
     width: 100%;
     max-width: 300px;
@@ -237,7 +255,6 @@
     display: block;
   }
 
-  /* caravan: a 16:9 lab still */
   .shot.lab {
     aspect-ratio: 16 / 9;
     display: flex;
@@ -246,6 +263,7 @@
     border: 1px solid var(--border);
     border-radius: 5px;
     overflow: hidden;
+    position: relative;
   }
   .shot.lab img {
     width: 100%;
@@ -255,7 +273,6 @@
     display: block;
   }
 
-  /* flyover-pill: a slim strip of the bar, at actual size */
   .shot.bar {
     height: 72px;
     display: flex;
@@ -266,7 +283,7 @@
     border: 1px solid var(--border);
     border-radius: 5px;
   }
-  .shot.bar img { flex: none; width: 540px; height: 60px; display: block; }
+  .shot.bar img { flex: none; width: 540px; max-width: none; height: 60px; display: block; }
 
   .tool-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
   .tool h3 { margin: 0; font-size: 1.25rem; color: var(--accent); }
@@ -289,6 +306,8 @@
     background: var(--deep);
     border: 1px solid var(--border);
     border-radius: 4px;
+    min-width: 0;
+    max-width: 100%;
   }
   .cmd pre {
     margin: 0;
@@ -299,6 +318,7 @@
     font: inherit;
     font-size: 0.8rem;
     color: var(--accent);
+    white-space: pre;
   }
   .copy {
     flex: none;
@@ -316,55 +336,97 @@
 
   .links { display: flex; gap: 6px 16px; flex-wrap: wrap; margin-top: auto; padding-top: 16px; font-size: 0.86rem; }
 
-
-  /* ---------------- caravan spotlight ---------------- */
-
+  /* featured Caravan card — larger than a tool card */
   .caravan-spot {
     background: var(--panel);
     border: 1px solid rgba(232, 176, 120, 0.38);
-    border-radius: 6px;
-    padding: 18px;
+    border-radius: 8px;
+    padding: 26px;
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: 22px;
-    align-items: center;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-areas:
+      "shot body"
+      "cmd  cmd"
+      "note note";
+    gap: 16px 28px;
+    align-items: start;
     position: relative;
-    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    min-width: 0;
     box-shadow: 0 12px 40px rgba(0, 0, 10, 0.35), 0 16px 36px rgba(224, 120, 40, 0.08);
   }
-  .caravan-spot:hover,
-  .caravan-spot:focus-within {
-    border-color: #e0924a;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(224, 146, 74, 0.35);
+  .caravan-spot .shot.lab {
+    grid-area: shot;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-self: start;
+  }
+  .caravan-spot .body { grid-area: body; min-width: 0; display: flex; flex-direction: column; }
+  .caravan-spot .tool-head { margin-bottom: 4px; }
+  .caravan-spot h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 3vw, 2.15rem);
+    color: var(--warm2);
+    font-weight: 700;
   }
   .caravan-spot .chip {
-    color: #f0c48a;
+    color: var(--warm2);
     border-color: rgba(224, 146, 74, 0.45);
+    font-size: 0.8rem;
+    padding: 3px 11px;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .caravan-spot { transition: none; }
-    .caravan-spot:hover, .caravan-spot:focus-within { transform: none; }
-  }
-  .caravan-spot .shot.lab { margin: 0; }
-  .caravan-spot .body { min-width: 0; }
-  .caravan-spot .tool-head { margin-bottom: 4px; }
-  .caravan-spot p { margin: 10px 0 0; font-size: 0.9rem; }
+  .caravan-spot p { margin: 10px 0 0; font-size: 0.95rem; }
   .caravan-spot p.note { color: var(--dim); font-size: 0.8rem; margin-top: 8px; }
-  .caravan-spot .links { display: flex; gap: 6px 16px; flex-wrap: wrap; margin-top: 16px; font-size: 0.86rem; }
-  .caravan-spot .card-link::after {
+  .caravan-spot .links { margin-top: 16px; padding-top: 0; }
+  .caravan-spot .cmd {
+    grid-area: cmd;
+    margin-top: 0;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .caravan-spot .cmd pre { color: var(--warm2); }
+  .caravan-spot .copy:hover { color: var(--warm2); border-color: var(--warm); }
+  .caravan-spot .install-note {
+    grid-area: note;
+    color: var(--dim);
+    font-size: 0.8rem;
+    margin: 0;
+  }
+  .thumb-link, .shot.lab img { max-width: 100%; min-width: 0; }
+  .thumb-link {
+    display: block;
+    position: relative;
+    z-index: 2;
+    color: inherit;
+    height: 100%;
+  }
+  .thumb-link:hover { text-decoration: none; }
+  .thumb-link:focus-visible { outline: 2px solid var(--warm); outline-offset: 3px; border-radius: 5px; }
+  .play-mark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 62px;
+    height: 62px;
+    margin: -31px 0 0 -31px;
+    border-radius: 50%;
+    background: rgba(10, 16, 28, 0.62);
+    border: 2px solid var(--warm2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+  }
+  .play-mark::after {
     content: "";
     position: absolute;
-    inset: 0;
-    z-index: 1;
-    border-radius: 6px;
+    left: 24px;
+    top: 19px;
+    border-style: solid;
+    border-width: 12px 0 12px 20px;
+    border-color: transparent transparent transparent var(--warm2);
   }
-  .caravan-spot .links a, .caravan-spot p a { position: relative; z-index: 2; }
-  @media (max-width: 720px) {
-    .caravan-spot { grid-template-columns: 1fr; }
-  }
-
-  /* ---------------- hangar ---------------- */
+  .thumb-link:hover .play-mark { background: rgba(10, 16, 28, 0.8); }
 
   .hangar {
     display: grid;
@@ -378,8 +440,6 @@
   }
   .soon h4 { margin: 0 0 6px; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
   .soon p { margin: 0; color: var(--dim); font-size: 0.88rem; }
-
-  /* ---------------- about ---------------- */
 
   .about {
     background: var(--panel);
@@ -396,8 +456,6 @@
   .chips { display: flex; gap: 8px; flex-wrap: wrap; }
   .chips .chip { color: var(--accent); border-color: rgba(130, 251, 156, 0.4); font-size: 0.78rem; padding: 3px 11px; }
 
-  /* ---------------- footer ---------------- */
-
   footer {
     border-top: 1px solid var(--border);
     margin-top: 24px;
@@ -408,13 +466,38 @@
   footer a { color: var(--dim); }
   footer a:hover { color: var(--accent); }
 
+  @media (max-width: 800px) {
+    .split-hero { grid-template-columns: 1fr; padding: 32px 0 8px; }
+    .caravan-spot {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "shot"
+        "body"
+        "cmd"
+        "note";
+      padding: 18px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .cmd { flex-wrap: wrap; }
+    .cmd pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .copy { margin: 0 6px 6px auto; }
+  }
+
   @media (max-width: 480px) {
     .wrap { padding: 0 16px; }
-    .hero { padding: 48px 0 44px; }
     section { padding: 36px 0; }
-    .tools { grid-template-columns: 1fr; }
-    .hangar { grid-template-columns: 1fr; }
+    .tools, .hangar { grid-template-columns: 1fr; }
     .tool { padding: 14px; }
+    .hero-panel { padding: 22px 18px 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -425,25 +508,32 @@
   <nav class="top">
     <a class="wordmark" href="#">linuxbren <span>✈&#xFE0E;</span></a>
     <ul>
-      <li><a href="#tools">tools</a></li>
-      <li><a href="#caravan">caravan</a></li>
-      <li><a href="#hangar">hangar</a></li>
-      <li><a href="#about">about</a></li>
+      <li><a href="#omarchy">tools</a></li>
+      <li><a href="#ai">caravan</a></li>
       <li><a href="https://github.com/linuxbren" target="_blank" rel="noopener">github ↗</a></li>
     </ul>
   </nav>
 
-  <header class="hero">
-    <div class="prompt"><b>bren@omarchy</b> ~ $ ls ~/tools</div>
-    <h1>Retro tools for Omarchy.</h1>
-    <p class="lede">Terminal-native, theme-aware, no chrome. Each one reads your live Omarchy colors, so it always looks like it belongs. Caravan, for running AI models on your own Macs, lives next door.</p>
-    <div class="cta">
-      <a class="btn fill" href="#tools">See the tools</a>
-      <a class="btn line" href="https://github.com/linuxbren" target="_blank" rel="noopener">github.com/linuxbren</a>
+  <header class="split-hero">
+    <div class="hero-panel omarchy">
+      <div class="prompt"><b>bren@omarchy</b> ~ $ ls ~/tools</div>
+      <h2>Retro Omarchy</h2>
+      <p class="lede">Terminal-native, theme-aware, no chrome. Each one reads your live Omarchy colors, so it always looks like it belongs.</p>
+      <div class="cta">
+        <a class="btn fill" href="#omarchy">See the tools</a>
+      </div>
+    </div>
+    <div class="hero-panel ai">
+      <div class="prompt"><b>bren@macs</b> ~ $ caravan status</div>
+      <h2>Local AI</h2>
+      <p class="lede">Run AI models on your own Macs, together. Open source, MLX and GGUF — that’s Caravan.</p>
+      <div class="cta">
+        <a class="btn warm" href="#ai">See Caravan</a>
+      </div>
     </div>
   </header>
 
-  <section id="tools">
+  <section id="omarchy">
     <div class="label">the toolbox · 3</div>
 
     <div class="tools">
@@ -506,20 +596,22 @@ omarchy bar put bren.flyover --section right</pre><button class="copy" type="but
         </div>
       </article>
 
-
     </div>
   </section>
 
 
-  <section id="caravan">
+  <section id="ai">
     <div class="label">local AI · your Macs</div>
-    <div class="caravan-spot">
+    <article class="caravan-spot">
       <div class="shot lab">
-        <img src="assets/caravan-campfire.webp" width="1200" height="675" alt="Caravan’s Campfire look: a cool night sky, a moon, crisp stars, a dark tree line, and a fire glowing low in the corner">
+        <a class="thumb-link" href="caravan.html#lab">
+          <img src="assets/caravan-day6-poster.webp" width="960" height="540" alt="Lab video still: Several chats at once — two Mac minis share one model">
+          <span class="play-mark" aria-hidden="true"></span>
+        </a>
       </div>
       <div class="body">
         <div class="tool-head">
-          <h3><a class="card-link" href="caravan.html">caravan</a></h3>
+          <h3><a href="caravan.html">caravan</a></h3>
           <span class="chip">Day 27 · local AI</span>
         </div>
         <p>Run AI models on your own Macs, together. Caravan splits big models across two Macs, tunes itself for speed, and gives you a simple chat page you can open from anywhere. Open source, MLX and GGUF.</p>
@@ -531,35 +623,11 @@ omarchy bar put bren.flyover --section right</pre><button class="copy" type="but
           <a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">source →</a>
         </div>
       </div>
-    </div>
+      <div class="cmd"><pre>(set -o pipefail; curl -fsSL https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/install | bash)</pre><button class="copy" type="button">copy</button></div>
+      <p class="install-note">Paste that in Terminal on an Apple Silicon Mac running macOS 14 or newer. <a href="caravan.html#install">Full install steps →</a></p>
+    </article>
   </section>
 
-  <section id="hangar">
-    <div class="label">in the hangar</div>
-    <div class="hangar">
-      <div class="soon">
-        <h4>terminal colony sim <span class="chip">soon</span></h4>
-        <p>A Factorio/Satisfactory-flavored automation game rendered in the terminal, re-skinning itself live to match your Omarchy theme.</p>
-      </div>
-      <div class="soon">
-        <h4>wireframe flight sim <span class="chip">soon</span></h4>
-        <p>A vector-wireframe aircraft flying over real elevation data (SRTM), rendered in the same glowing CRT style as flyover.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="label">about</div>
-    <div class="about">
-      <p>I'm Bren: flight nerd, Linux and Omarchy fan, AI tinkerer, dad of one. I build the small tools I want on my own desktop.</p>
-      <div class="chips">
-        <span class="chip">flight</span>
-        <span class="chip">Omarchy</span>
-        <span class="chip">Linux</span>
-        <span class="chip">AI</span>
-      </div>
-    </div>
-  </section>
 
   <footer>
     linuxbren.github.io · <a href="https://github.com/linuxbren" target="_blank" rel="noopener">github.com/linuxbren</a>
