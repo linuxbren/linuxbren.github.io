@@ -1,14 +1,19 @@
 # linuxbren.github.io
 
 Personal site: retro-styled tools for Omarchy ([console-places](https://github.com/linuxbren/console-places),
-[flyover](https://github.com/linuxbren/flyover), [flyover-pill](https://github.com/linuxbren/flyover-pill))
-plus [Caravan](https://github.com/linuxbren/caravan) (run AI models on your
-own Macs, together). Static HTML (`index.html` + `caravan.html`), plain
-HTML/CSS plus a few lines of JS for the copy buttons, no build step. Served
-by GitHub Pages from `master`. The Caravan page uses the app's Campfire
-theme (SVG night sky, moon, stars, tree line, and a low fire); the rest of
-the site keeps the Hackerman toolbox look, with a Campfire accent on the
-index card.
+[flyover](https://github.com/linuxbren/flyover), [flyover-pill](https://github.com/linuxbren/flyover-pill)),
+[Caravan](https://github.com/linuxbren/caravan) (run AI models on your
+own Macs, together), and [Fix YouTube](https://github.com/linuxbren/fix-youtube)
+(a small Chrome extension that keeps theater mode, plus captions and autoplay). Static
+HTML (`index.html` + `caravan.html` + `fix-youtube.html`), plain HTML/CSS
+plus a few lines of JS for the copy buttons, no build step. Served by GitHub
+Pages from `master`. The Caravan page uses the app's Campfire theme (SVG night
+sky, moon, stars, tree line, and a low fire); the rest of the site keeps the
+Hackerman toolbox look, with a Campfire accent on the index Caravan card.
+
+The project page lives at `/fix-youtube.html` (not `/fix-youtube/`). That
+folder path is the GitHub Pages site for the `linuxbren/fix-youtube` repo,
+including the [privacy policy](https://linuxbren.github.io/fix-youtube/privacy.html).
 
 Live at https://linuxbren.github.io.
 
@@ -33,9 +38,12 @@ covers websites only; other code waits for his OK before pushing.)
   Then the name, a version/language chip, a one-paragraph pitch, the install
   command with a copy button, and links. Long per-tool detail lives in each
   tool's README, not here.
-- **Caravan (`#caravan`):** its own spotlight section (not in the Omarchy
+- **Caravan (`#ai`):** its own spotlight section (not in the Omarchy
   toolbox), linking to `caravan.html`. Wide card with a 16:9 Campfire still
   and an amber accent, so it sits apart from the green toolbox cards.
+- **Browser Extensions (`#extensions`):** its own section, styled like the
+  toolbox, currently one card for Fix YouTube linking to `fix-youtube.html`.
+  Assets live in `assets/fix-youtube/`.
 - **In the hangar (`#hangar`):** dashed "soon" cards for upcoming projects.
 - **About (`#about`)** strip with interest chips, then the footer.
 
@@ -65,6 +73,7 @@ Everything in `assets/` is loaded by `index.html`:
 | `flyover-ascii-demo.webm` | flyover's round radar (looping Braille-mode clip, 480×508) |
 | `flyover-ascii.webp` | poster frame for that clip |
 | `pill.webp` | flyover-pill bar strip (540×60, shown at actual size) |
+| `fix-youtube/` | Fix YouTube icon, marquee, and store screenshots (webp) for the home card and `fix-youtube.html` |
 | `caravan-campfire.webp` | caravan spotlight still and Caravan page `og:image` (Campfire scenery, 1200×675) |
 | `caravan-hero.webp` | earlier layer-split diagram (kept, no longer used on the live cards) |
 | `caravan-day6-poster.webp` | featured Day 6 poster on the Caravan page |

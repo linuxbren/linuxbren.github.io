@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fix YouTube — a small Chrome extension</title>
+<meta name="description" content="A small free Chrome extension that keeps YouTube in theater mode, and can also handle closed captions and autoplay. Leave them alone, force them on or off, or hide the button. No tracking, MIT licensed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://linuxbren.github.io/fix-youtube.html">
+<meta property="og:title" content="Fix YouTube — a small Chrome extension">
+<meta property="og:description" content="YouTube won’t stay in theater mode, and then the comments are right in your face. This little extension keeps the wide player, and can also handle captions and autoplay.">
+<meta property="og:image" content="https://linuxbren.github.io/assets/fix-youtube/marquee.webp">
+<meta name="theme-color" content="#0b0c16">
+<link rel="icon" type="image/svg+xml" href="assets/fix-youtube/icon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/fix-youtube/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/fix-youtube/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c16;
+    --panel: #11132a;
+    --deep: #07080f;
+    --fg: #ddf7ff;
+    --dim: #8fa8b3;
+    --accent: #82fb9c;
+    --link: #7fd7ff;
+    --border: #2d3450;
+    --display: 'Chakra Petch', 'JetBrains Mono', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', 'Fira Code', monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background: repeating-linear-gradient(to bottom, rgba(0,0,0,0.15) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+    opacity: 0.45;
+  }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: inherit; }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  nav.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .wordmark {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: 0.02em;
+    color: var(--fg);
+  }
+  .wordmark:hover { text-decoration: none; }
+  .wordmark span { color: var(--accent); }
+  nav.top ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 6px 20px;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+  nav.top ul a { color: var(--dim); }
+  nav.top ul a:hover,
+  nav.top ul a.active { color: var(--accent); text-decoration: none; }
+
+  section { padding: 48px 0; }
+  #what, #install { scroll-margin-top: 16px; }
+
+  .label {
+    color: var(--dim);
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+  }
+  .label::before { content: "# "; color: var(--border); }
+
+  header.hero { padding: 48px 0 24px; }
+  .prompt { color: var(--dim); font-size: 0.82rem; margin: 0 0 14px; }
+  .prompt b { color: var(--accent); font-weight: 500; }
+  .hero-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 0 0 12px;
+  }
+  .hero-title img {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    flex: none;
+    background: #111;
+    border: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.85rem, 4.2vw, 2.7rem);
+    line-height: 1.08;
+    margin: 0;
+    text-shadow: 0 0 18px rgba(130, 251, 156, 0.18);
+  }
+  .tagline {
+    color: var(--accent);
+    font-size: 1.02rem;
+    margin: 0 0 12px;
+    max-width: 46ch;
+  }
+  .lede {
+    color: var(--dim);
+    font-size: 0.98rem;
+    margin: 0;
+    max-width: 58ch;
+  }
+  .meta-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0 0;
+  }
+  .chip {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 2px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    white-space: nowrap;
+  }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+  .btn {
+    display: inline-block;
+    padding: 11px 20px;
+    border-radius: 4px;
+    border: 1px solid var(--accent);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn.fill { background: var(--accent); color: var(--deep); }
+  .btn.fill:hover { box-shadow: 0 0 16px rgba(130, 251, 156, 0.4); }
+  .btn.line { color: var(--accent); }
+  .btn.line:hover { background: rgba(130, 251, 156, 0.08); }
+
+  .hero-art {
+    margin: 32px 0 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: #111;
+  }
+  .hero-art img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .shot {
+    margin: 0 0 16px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+    background: var(--deep);
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .feature {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    min-width: 0;
+  }
+  .feature h3 {
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+    color: var(--accent);
+  }
+  .feature p {
+    margin: 0;
+    color: var(--dim);
+    font-size: 0.88rem;
+  }
+  .how {
+    margin: 22px 0 0;
+    max-width: 70ch;
+    color: var(--dim);
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px 26px;
+  }
+  .panel h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    margin: 0 0 14px;
+  }
+  .panel p { margin: 0 0 14px; }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel ol {
+    margin: 0 0 18px;
+    padding: 0 0 0 1.3em;
+  }
+  .panel li { margin: 0 0 10px; }
+  .panel li:last-child { margin-bottom: 0; }
+
+  .cmd {
+    display: flex;
+    align-items: flex-start;
+    margin: 16px 0;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .cmd pre {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    padding: 11px 13px;
+    overflow-x: auto;
+    font: inherit;
+    font-size: 0.8rem;
+    color: var(--accent);
+    white-space: pre;
+  }
+  .copy {
+    flex: none;
+    margin: 6px 6px 6px 0;
+    font: inherit;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--dim);
+    cursor: pointer;
+  }
+  .copy:hover { color: var(--accent); border-color: var(--accent); }
+
+  .fine {
+    color: var(--dim);
+    font-size: 0.82rem;
+    margin: 18px 0 0;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+    padding: 28px 0 48px;
+    color: var(--dim);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--dim); }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 800px) {
+    .features { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .cmd { flex-wrap: wrap; }
+    .cmd pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .copy { margin: 0 6px 6px auto; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 16px; }
+    section { padding: 36px 0; }
+    header.hero { padding: 32px 0 8px; }
+    .panel { padding: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <nav class="top">
+    <a class="wordmark" href="index.html">linuxbren <span>✈&#xFE0E;</span></a>
+    <ul>
+      <li><a href="index.html#omarchy">tools</a></li>
+      <li><a href="index.html#ai">caravan</a></li>
+      <li><a class="active" href="fix-youtube.html">extensions</a></li>
+      <li><a href="https://github.com/linuxbren/fix-youtube" target="_blank" rel="noopener">github ↗</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="prompt"><b>bren@omarchy</b> ~ $ ls ~/extensions</div>
+    <div class="hero-title">
+      <img src="assets/fix-youtube/icon.svg" width="56" height="56" alt="">
+      <h1>Fix YouTube</h1>
+    </div>
+    <p class="tagline">Inspired by Omarchy, developed on Omarchy. We can fix ANYTHING.</p>
+    <p class="lede">YouTube won’t stay in theater mode, and then the comments are right in your face. This is a small free Chrome extension that keeps the wide player, and can also handle captions and autoplay.</p>
+    <div class="meta-row">
+      <span class="chip">free</span>
+      <span class="chip">Chrome / Chromium</span>
+      <span class="chip">MIT</span>
+      <span class="chip">no tracking</span>
+    </div>
+    <div class="cta">
+      <a class="btn fill" href="#install">Install it</a>
+      <a class="btn line" href="https://github.com/linuxbren/fix-youtube" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn line" href="https://linuxbren.github.io/fix-youtube/privacy.html">Privacy</a>
+    </div>
+    <div class="hero-art">
+      <img src="assets/fix-youtube/marquee.webp" width="1400" height="560" alt="Fix YouTube logo and tagline next to the extension popup for theater mode, captions, and autoplay">
+    </div>
+  </header>
+
+  <section id="what">
+    <div class="label">what it does</div>
+    <div class="features">
+      <article class="feature">
+        <div class="shot">
+          <img src="assets/fix-youtube/screenshot-theater.webp" width="1200" height="750" alt="Fix YouTube popup with Player view set to Theater, next to the headline Always theater mode">
+        </div>
+        <h3>Always theater mode</h3>
+        <p>Keep the wide player, so the comments stay out of the way. Or just hide the theater button.</p>
+      </article>
+      <article class="feature">
+        <div class="shot">
+          <img src="assets/fix-youtube/screenshot-captions.webp" width="1200" height="750" alt="Fix YouTube popup with Closed captions set to On, next to the headline Captions your way">
+        </div>
+        <h3>Captions your way</h3>
+        <p>Force captions on or off, or hide the CC button.</p>
+      </article>
+      <article class="feature">
+        <div class="shot">
+          <img src="assets/fix-youtube/screenshot-autoplay.webp" width="1200" height="750" alt="Fix YouTube popup with Autoplay set to Off, next to the headline Turn off autoplay for good">
+        </div>
+        <h3>Turn off autoplay for good</h3>
+        <p>Force the next-up toggle off, or just hide the button.</p>
+      </article>
+    </div>
+    <p class="how">For each one you can leave it alone, force it on, force it off, or hide the button. Pick something in the popup and it applies on the current tab, no reload. It also reapplies when you go to the next video.</p>
+  </section>
+
+  <section id="install">
+    <div class="label">install</div>
+    <div class="panel">
+      <h2>Load it unpacked, for now</h2>
+      <p>It’s not on the Chrome Web Store yet — I just submitted it. Until that’s up, load it unpacked in Chrome, Edge, Brave, or any Chromium browser:</p>
+      <ol>
+        <li>Download or clone the repo.</li>
+        <li>Open <code>chrome://extensions</code> in the address bar.</li>
+        <li>Turn on <strong>Developer mode</strong>.</li>
+        <li>Click <strong>Load unpacked</strong> and pick the folder you just got.</li>
+      </ol>
+      <div class="cmd"><pre>git clone https://github.com/linuxbren/fix-youtube.git</pre><button class="copy" type="button">copy</button></div>
+      <p>That’s it. Open YouTube, click the icon, and set theater mode, captions, or autoplay.</p>
+      <p class="fine">No tracking, and settings stay in your browser. MIT licensed. <a href="https://linuxbren.github.io/fix-youtube/privacy.html">Privacy policy</a>. Not affiliated with YouTube or Google.</p>
+    </div>
+  </section>
+
+  <footer>
+    linuxbren.github.io · <a href="https://github.com/linuxbren/fix-youtube" target="_blank" rel="noopener">github.com/linuxbren/fix-youtube</a>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.parentElement.querySelector('pre').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'copied';
+        setTimeout(function () { btn.textContent = 'copy'; }, 1400);
+      }, function () {
+        btn.textContent = 'select it';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

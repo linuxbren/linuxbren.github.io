@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>linuxbren</title>
-<meta name="description" content="linuxbren — retro tools for Omarchy (console-places, flyover, flyover-pill), and Caravan: run AI models on your own Macs, together.">
+<meta name="description" content="linuxbren — retro tools for Omarchy (console-places, flyover, flyover-pill), Caravan: run AI models on your own Macs, together, and Fix YouTube, a Chrome extension that keeps theater mode, plus captions and autoplay.">
 <meta name="theme-color" content="#0b0c16">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -152,7 +152,7 @@
   .btn.warm:hover { box-shadow: 0 0 16px rgba(224, 146, 74, 0.4); }
 
   section { padding: 48px 0; }
-  #omarchy, #ai, #hangar, #about { scroll-margin-top: 16px; }
+  #omarchy, #ai, #extensions, #hangar, #about { scroll-margin-top: 16px; }
 
   .label {
     color: var(--dim);
@@ -167,6 +167,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
+  }
+  .tools.single {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
   .tool {
     background: var(--panel);
@@ -512,6 +515,7 @@
     <ul>
       <li><a href="#omarchy">tools</a></li>
       <li><a href="#ai">caravan</a></li>
+      <li><a href="#extensions">extensions</a></li>
       <li><a href="https://github.com/linuxbren" target="_blank" rel="noopener">github ↗</a></li>
     </ul>
   </nav>
@@ -629,6 +633,33 @@ omarchy bar put bren.flyover --section right</pre><button class="copy" type="but
       <div class="cmd"><pre>(set -o pipefail; curl -fsSL https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/install | bash)</pre><button class="copy" type="button">copy</button></div>
       <p class="install-note">Paste that in Terminal on an Apple Silicon Mac running macOS 14 or newer. <a href="caravan.html#install">Full install steps →</a></p>
     </article>
+  </section>
+
+
+  <section id="extensions">
+    <div class="label">browser extensions · 1</div>
+
+    <div class="tools single">
+
+      <article class="tool">
+        <div class="shot window">
+          <div class="titlebar"><i></i><i></i><i></i><span>Fix YouTube — popup</span></div>
+          <img src="assets/fix-youtube/screenshot-theater.webp" width="1200" height="750" alt="Fix YouTube popup next to the headline Always theater mode, with Player view set to Theater and the other controls left alone">
+        </div>
+        <div class="tool-head">
+          <h3><a class="card-link" href="fix-youtube.html">Fix YouTube</a></h3>
+          <span class="chip">Chrome extension</span>
+        </div>
+        <p>YouTube won’t stay in theater mode, and then the comments are right in your face. This little extension keeps the wide player. It can also handle captions and autoplay — leave them alone, force them on or off, or hide the button. No tracking, MIT licensed.</p>
+        <p class="note">Not on the Chrome Web Store yet. Load it unpacked from the repo for now.</p>
+        <div class="links">
+          <a href="fix-youtube.html">page →</a>
+          <a href="https://github.com/linuxbren/fix-youtube" target="_blank" rel="noopener">source →</a>
+          <a href="https://linuxbren.github.io/fix-youtube/privacy.html">privacy →</a>
+        </div>
+      </article>
+
+    </div>
   </section>
 
 
