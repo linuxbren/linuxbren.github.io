@@ -93,15 +93,15 @@
 
   .split-hero {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
     padding: 48px 0 24px;
   }
   .hero-panel {
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 28px 26px 24px;
+    padding: 22px 18px 18px;
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -112,25 +112,30 @@
     border-color: rgba(232, 176, 120, 0.38);
     box-shadow: 0 12px 40px rgba(0, 0, 10, 0.25), 0 16px 36px rgba(224, 120, 40, 0.06);
   }
-  .prompt { color: var(--dim); font-size: 0.82rem; margin: 0 0 14px; }
+  .hero-panel.extensions {
+    border-color: rgba(224, 107, 107, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 0, 10, 0.25), 0 16px 36px rgba(224, 80, 80, 0.06);
+  }
+  .prompt { color: var(--dim); font-size: 0.78rem; margin: 0 0 12px; }
   .prompt b { color: var(--accent); font-weight: 500; }
   .hero-panel.ai .prompt b { color: var(--warm2); }
+  .hero-panel.extensions .prompt b { color: #ffb3b3; }
   .hero-panel h2 {
     font-family: var(--display);
     font-weight: 700;
-    font-size: clamp(1.85rem, 4.2vw, 2.7rem);
-    line-height: 1.08;
-    margin: 0 0 14px;
+    font-size: clamp(1.25rem, 2.1vw, 1.85rem);
+    line-height: 1.12;
+    margin: 0 0 10px;
     text-shadow: 0 0 18px rgba(130, 251, 156, 0.18);
   }
   .hero-panel.ai h2 { text-shadow: 0 0 18px rgba(224, 146, 74, 0.22); }
+  .hero-panel.extensions h2 { text-shadow: 0 0 18px rgba(224, 107, 107, 0.22); }
   .hero-panel .lede {
     color: var(--dim);
-    font-size: 0.98rem;
+    font-size: 0.88rem;
     margin: 0;
-    max-width: 42ch;
   }
-  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; padding-top: 26px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; padding-top: 18px; }
   .btn {
     display: inline-block;
     padding: 11px 20px;
@@ -150,6 +155,12 @@
     border-color: var(--warm);
   }
   .btn.warm:hover { box-shadow: 0 0 16px rgba(224, 146, 74, 0.4); }
+  .btn.hot {
+    background: #e06b6b;
+    color: #120000;
+    border-color: #e06b6b;
+  }
+  .btn.hot:hover { box-shadow: 0 0 16px rgba(224, 107, 107, 0.4); }
 
   section { padding: 48px 0; }
   #omarchy, #ai, #extensions, #hangar, #about { scroll-margin-top: 16px; }
@@ -167,9 +178,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-  }
-  .tools.single {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
   .tool {
     background: var(--panel);
@@ -471,8 +479,13 @@
   footer a { color: var(--dim); }
   footer a:hover { color: var(--accent); }
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .split-hero { grid-template-columns: 1fr; padding: 32px 0 8px; }
+    .hero-panel h2 { font-size: clamp(1.5rem, 6vw, 2.1rem); }
+    .hero-panel .lede { font-size: 0.95rem; }
+  }
+
+  @media (max-width: 800px) {
     .caravan-spot {
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas:
@@ -535,6 +548,14 @@
       <p class="lede">Run AI models on your own Macs, together. Open source, MLX and GGUF — that’s Caravan.</p>
       <div class="cta">
         <a class="btn warm" href="#ai">See Caravan</a>
+      </div>
+    </div>
+    <div class="hero-panel extensions" id="extensions">
+      <div class="prompt"><b>bren@omarchy</b> ~ $ ls ~/extensions</div>
+      <h2>Browser Extensions</h2>
+      <p class="lede">YouTube won’t stay in theater mode, and then the comments are right in your face. Fix YouTube keeps the wide player.</p>
+      <div class="cta">
+        <a class="btn hot" href="fix-youtube.html">See Fix YouTube</a>
       </div>
     </div>
   </header>
@@ -633,33 +654,6 @@ omarchy bar put bren.flyover --section right</pre><button class="copy" type="but
       <div class="cmd"><pre>(set -o pipefail; curl -fsSL https://raw.githubusercontent.com/linuxbren/caravan/caravan-v3-mlx-split/install | bash)</pre><button class="copy" type="button">copy</button></div>
       <p class="install-note">Paste that in Terminal on an Apple Silicon Mac running macOS 14 or newer. <a href="caravan.html#install">Full install steps →</a></p>
     </article>
-  </section>
-
-
-  <section id="extensions">
-    <div class="label">browser extensions · 1</div>
-
-    <div class="tools single">
-
-      <article class="tool">
-        <div class="shot window">
-          <div class="titlebar"><i></i><i></i><i></i><span>Fix YouTube — popup</span></div>
-          <img src="assets/fix-youtube/screenshot-theater.webp" width="1200" height="750" alt="Fix YouTube popup next to the headline Always theater mode, with Player view set to Theater and the other controls left alone">
-        </div>
-        <div class="tool-head">
-          <h3><a class="card-link" href="fix-youtube.html">Fix YouTube</a></h3>
-          <span class="chip">Chrome extension</span>
-        </div>
-        <p>YouTube won’t stay in theater mode, and then the comments are right in your face. This little extension keeps the wide player. It can also handle captions and autoplay — leave them alone, force them on or off, or hide the button. No tracking, MIT licensed.</p>
-        <p class="note">Not on the Chrome Web Store yet. Load it unpacked from the repo for now.</p>
-        <div class="links">
-          <a href="fix-youtube.html">page →</a>
-          <a href="https://github.com/linuxbren/fix-youtube" target="_blank" rel="noopener">source →</a>
-          <a href="https://linuxbren.github.io/fix-youtube/privacy.html">privacy →</a>
-        </div>
-      </article>
-
-    </div>
   </section>
 
 

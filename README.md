@@ -27,7 +27,8 @@ covers websites only; other code waits for his OK before pushing.)
 ## Layout ("A + C combo", Hackerman theme)
 
 - **Nav:** `linuxbren ✈` wordmark; tools · hangar · about · github ↗.
-- **Hero:** prompt line, h1 "Retro tools for Omarchy.", lede, two buttons.
+- **Hero:** three condensed category cards in a row (Retro Omarchy, Local AI,
+  Browser Extensions) on desktop, stacking on smaller screens.
 - **Toolbox (`#tools`):** a three-column grid (`auto-fit, minmax(300px, 1fr)`;
   one column on phones) of equal cards, in this order: console-places, flyover,
   flyover-pill. Each card leads with its own kind of shot:
@@ -41,9 +42,9 @@ covers websites only; other code waits for his OK before pushing.)
 - **Caravan (`#ai`):** its own spotlight section (not in the Omarchy
   toolbox), linking to `caravan.html`. Wide card with a 16:9 Campfire still
   and an amber accent, so it sits apart from the green toolbox cards.
-- **Browser Extensions (`#extensions`):** its own section, styled like the
-  toolbox, currently one card for Fix YouTube linking to `fix-youtube.html`.
-  Assets live in `assets/fix-youtube/`.
+- **Browser Extensions (`#extensions`):** the third hero card, linking to
+  `fix-youtube.html`. The `#extensions` anchor is on that card so the nav
+  still works. Assets live in `assets/fix-youtube/`.
 - **In the hangar (`#hangar`):** dashed "soon" cards for upcoming projects.
 - **About (`#about`)** strip with interest chips, then the footer.
 

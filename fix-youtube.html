@@ -108,6 +108,10 @@
   .label::before { content: "# "; color: var(--border); }
 
   header.hero { padding: 48px 0 24px; }
+  .hero-copy {
+    max-width: 54rem;
+    margin-inline: auto;
+  }
   .prompt { color: var(--dim); font-size: 0.82rem; margin: 0 0 14px; }
   .prompt b { color: var(--accent); font-weight: 500; }
   .hero-title {
@@ -135,15 +139,13 @@
   }
   .tagline {
     color: var(--accent);
-    font-size: 1.02rem;
+    font-size: 1.08rem;
     margin: 0 0 12px;
-    max-width: 46ch;
   }
   .lede {
     color: var(--dim);
-    font-size: 0.98rem;
+    font-size: 1.02rem;
     margin: 0;
-    max-width: 58ch;
   }
   .meta-row {
     display: flex;
@@ -224,8 +226,8 @@
     font-size: 0.88rem;
   }
   .how {
-    margin: 22px 0 0;
-    max-width: 70ch;
+    margin: 22px auto 0;
+    max-width: 54rem;
     color: var(--dim);
   }
 
@@ -339,6 +341,7 @@
   </nav>
 
   <header class="hero">
+    <div class="hero-copy">
     <div class="prompt"><b>bren@omarchy</b> ~ $ ls ~/extensions</div>
     <div class="hero-title">
       <img src="assets/fix-youtube/icon.svg" width="56" height="56" alt="">
@@ -357,8 +360,9 @@
       <a class="btn line" href="https://github.com/linuxbren/fix-youtube" target="_blank" rel="noopener">GitHub</a>
       <a class="btn line" href="https://linuxbren.github.io/fix-youtube/privacy.html">Privacy</a>
     </div>
+    </div>
     <div class="hero-art">
-      <img src="assets/fix-youtube/marquee.webp" width="1400" height="560" alt="Fix YouTube logo and tagline next to the extension popup for theater mode, captions, and autoplay">
+      <img src="assets/fix-youtube/marquee.webp" width="1400" height="560" alt="Fix YouTube logo and tagline next to the extension popup, with Player view set to Theater, Closed captions set to Hide button, and Autoplay set to Off">
     </div>
   </header>
 
