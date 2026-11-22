@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>linuxbren</title>
-<meta name="description" content="linuxbren — retro tools for Omarchy (console-places, flyover, flyover-pill), Caravan: run AI models on your own Macs, together, and Fix YouTube, a Chrome extension that keeps theater mode, plus captions and autoplay.">
+<meta name="description" content="linuxbren — retro tools for Omarchy (console-places, flyover, flyover-pill), and Caravan: run AI models on your own Macs, together.">
 <meta name="theme-color" content="#0b0c16">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -93,7 +93,7 @@
 
   .split-hero {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
     padding: 48px 0 24px;
   }
@@ -112,14 +112,9 @@
     border-color: rgba(232, 176, 120, 0.38);
     box-shadow: 0 12px 40px rgba(0, 0, 10, 0.25), 0 16px 36px rgba(224, 120, 40, 0.06);
   }
-  .hero-panel.extensions {
-    border-color: rgba(224, 107, 107, 0.4);
-    box-shadow: 0 12px 40px rgba(0, 0, 10, 0.25), 0 16px 36px rgba(224, 80, 80, 0.06);
-  }
   .prompt { color: var(--dim); font-size: 0.78rem; margin: 0 0 12px; }
   .prompt b { color: var(--accent); font-weight: 500; }
   .hero-panel.ai .prompt b { color: var(--warm2); }
-  .hero-panel.extensions .prompt b { color: #ffb3b3; }
   .hero-panel h2 {
     font-family: var(--display);
     font-weight: 700;
@@ -129,7 +124,6 @@
     text-shadow: 0 0 18px rgba(130, 251, 156, 0.18);
   }
   .hero-panel.ai h2 { text-shadow: 0 0 18px rgba(224, 146, 74, 0.22); }
-  .hero-panel.extensions h2 { text-shadow: 0 0 18px rgba(224, 107, 107, 0.22); }
   .hero-panel .lede {
     color: var(--dim);
     font-size: 0.88rem;
@@ -155,15 +149,8 @@
     border-color: var(--warm);
   }
   .btn.warm:hover { box-shadow: 0 0 16px rgba(224, 146, 74, 0.4); }
-  .btn.hot {
-    background: #e06b6b;
-    color: #120000;
-    border-color: #e06b6b;
-  }
-  .btn.hot:hover { box-shadow: 0 0 16px rgba(224, 107, 107, 0.4); }
-
   section { padding: 48px 0; }
-  #omarchy, #ai, #extensions, #hangar, #about { scroll-margin-top: 16px; }
+  #omarchy, #ai, #hangar, #about { scroll-margin-top: 16px; }
 
   .label {
     color: var(--dim);
@@ -528,7 +515,6 @@
     <ul>
       <li><a href="#omarchy">tools</a></li>
       <li><a href="#ai">caravan</a></li>
-      <li><a href="#extensions">extensions</a></li>
       <li><a href="https://github.com/linuxbren" target="_blank" rel="noopener">github ↗</a></li>
     </ul>
   </nav>
@@ -548,14 +534,6 @@
       <p class="lede">Run AI models on your own Macs, together. Open source, MLX and GGUF — that’s Caravan.</p>
       <div class="cta">
         <a class="btn warm" href="#ai">See Caravan</a>
-      </div>
-    </div>
-    <div class="hero-panel extensions" id="extensions">
-      <div class="prompt"><b>bren@omarchy</b> ~ $ ls ~/extensions</div>
-      <h2>Browser Extensions</h2>
-      <p class="lede">YouTube won’t stay in theater mode, and then the comments are right in your face. Fix YouTube keeps the wide player.</p>
-      <div class="cta">
-        <a class="btn hot" href="fix-youtube.html">See Fix YouTube</a>
       </div>
     </div>
   </header>
