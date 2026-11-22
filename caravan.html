@@ -849,7 +849,7 @@
     <h1>Run AI models on your own Macs, together.</h1>
     <p class="lede">Caravan splits big models across two Macs, tunes itself for speed, and gives you a simple chat page you can open from anywhere. Open source, MLX and GGUF.</p>
     <div class="meta-row">
-      <span class="chip hot">v0.9.0</span>
+      <span class="chip hot">v0.9.1</span>
       <span class="chip">open source</span>
       <span class="chip">MLX and GGUF</span>
       <span class="chip">Apple Silicon</span>
@@ -857,7 +857,7 @@
     </div>
     <div class="cta">
       <a class="btn fill" href="#install">Install on a Mac</a>
-      <a class="btn line" href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">Latest release</a>
+      <a class="btn line" href="https://github.com/linuxbren/caravan/releases/tag/v0.9.1" target="_blank" rel="noopener">Latest release</a>
       <a class="btn line" href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">GitHub</a>
       <a class="btn line" href="#journey">Journey</a>
     </div>
@@ -903,15 +903,15 @@
   </section>
 
   <section id="new">
-    <div class="label">new in v0.9.0 · Day 30</div>
+    <div class="label">new in v0.9.1 · Day 31</div>
     <div class="panel prose">
       <ul>
-        <li><strong>Finishes the work after a power loss.</strong> Each chat is saved on the 1st Mac before the model starts. If the power goes or Caravan crashes mid-reply, Caravan runs that chat again by itself once the model is back and saves the whole reply. It starts the reply over; it doesn’t pick up mid-sentence. Fetch it later with <code>caravan jobs</code>, and the chat page shows it as “Finished after a restart”. In a plug-pull test on two Macs, the split was back about 97 seconds after power returned and the cut chat finished on its own.</li>
-        <li><strong>A longer chat window.</strong> On Auto, a GGUF model’s chat window runs at the full length the model was trained for.</li>
-        <li><strong>One main branch.</strong> Install and <code>caravan update</code> follow <code>main</code>. Older installs keep updating.</li>
-        <li><strong>Waits for Thunderbolt after a restart.</strong> If Thunderbolt worked before, Caravan gives it up to a minute to come back instead of settling for Wi-Fi, and tells you if it comes up later.</li>
+        <li><strong>Fit counts the chat window.</strong> When Caravan picks between one Mac and a split, it now counts the memory for the model’s full chat window, not just its files. If one Mac only fits a shorter window, it says so and recommends the split, for example “Fits on 1 Mac with a 64K window. Split across 2 Macs for the full 128K window.” You can still pick one Mac. In our checks, Llama 3.1 8B and gpt-oss 20B fit on one Mac with their full 128K window, and Qwen3 30B-A3B is recommended as a split for its full 32K window.</li>
+        <li><strong>Only downloaded models to load.</strong> Settings lists a model only when its files are complete on the Mac or Macs that will run it. No half-finished downloads, and a deleted model drops off the list right away.</li>
+        <li><strong>Topology matches Settings.</strong> Topology’s On disk list now shows the same models as Settings, GGUF models included, and you can delete a GGUF model from there. A model that can’t load yet is marked “Not in Settings: files incomplete”.</li>
+        <li><strong>Small fix.</strong> Topology now shows where Caravan really runs from on each Mac.</li>
       </ul>
-      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">The v0.9.0 release</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY30.md" target="_blank" rel="noopener">the Day 30 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/main/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
+      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.1" target="_blank" rel="noopener">The v0.9.1 release</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY31.md" target="_blank" rel="noopener">the Day 31 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/main/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
     </div>
   </section>
 
@@ -1427,7 +1427,7 @@
     <div class="label">status</div>
     <div class="panel prose">
       <p><strong>Early and experimental.</strong> Caravan has been tried on two Macs. The easy install still needs more testing on a fresh account and with FileVault. It is not a signed Mac app.</p>
-      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest release is <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">v0.9.0</a> (Day 30, November 21, 2026). Day 27 and Day 26 are also tagged. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
+      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest release is <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.1" target="_blank" rel="noopener">v0.9.1</a> (Day 31, November 21, 2026). <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">v0.9.0</a> is Day 30. Day 27 and Day 26 are also tagged. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
       <div class="links">
         <a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">source →</a>
         <a href="https://github.com/linuxbren/caravan/blob/main/INSTALL.md" target="_blank" rel="noopener">install help →</a>
