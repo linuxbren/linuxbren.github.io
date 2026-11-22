@@ -295,6 +295,13 @@
     cursor: pointer;
   }
   .copy:hover { color: var(--accent2); border-color: var(--accent); }
+  .hero-cmd { margin-top: 20px; max-width: 760px; }
+  .hero-cmd pre { font-size: 0.9rem; }
+  .hero-cmd-note { margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
+  @media (max-width: 480px) {
+    .hero-cmd pre { font-size: 0.78rem; padding: 12px 14px 44px; }
+    .hero-cmd .copy { top: auto; bottom: 8px; }
+  }
 
   .links { display: flex; gap: 6px 16px; flex-wrap: wrap; margin-top: 18px; font-size: 0.95rem; }
 
@@ -861,6 +868,8 @@
       <a class="btn line" href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">GitHub</a>
       <a class="btn line" href="#journey">Journey</a>
     </div>
+    <div class="cmd hero-cmd"><pre>(set -o pipefail; curl -fsSL https://raw.githubusercontent.com/linuxbren/caravan/main/install | bash)</pre><button class="copy" type="button" aria-label="Copy the install command">copy</button></div>
+    <p class="hero-cmd-note">Paste it into Terminal on your Mac and press Return.</p>
   </header>
 
   <section id="what">
@@ -1567,12 +1576,25 @@
   document.querySelectorAll('.copy').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var text = btn.parentElement.querySelector('pre').textContent;
-      navigator.clipboard.writeText(text).then(function () {
+      function done() {
         btn.textContent = 'copied';
         setTimeout(function () { btn.textContent = 'copy'; }, 1400);
-      }, function () {
-        btn.textContent = 'select it';
-      });
+      }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        if (ok) { done(); } else { btn.textContent = 'select it'; }
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
+      }
     });
   });
 </script>
