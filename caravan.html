@@ -849,7 +849,7 @@
     <h1>Run AI models on your own Macs, together.</h1>
     <p class="lede">Caravan splits big models across two Macs, tunes itself for speed, and gives you a simple chat page you can open from anywhere. Open source, MLX and GGUF.</p>
     <div class="meta-row">
-      <span class="chip hot">Day 27</span>
+      <span class="chip hot">v0.9.0</span>
       <span class="chip">open source</span>
       <span class="chip">MLX and GGUF</span>
       <span class="chip">Apple Silicon</span>
@@ -857,7 +857,7 @@
     </div>
     <div class="cta">
       <a class="btn fill" href="#install">Install on a Mac</a>
-      <a class="btn line" href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">Latest release</a>
+      <a class="btn line" href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">Latest release</a>
       <a class="btn line" href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">GitHub</a>
       <a class="btn line" href="#journey">Journey</a>
     </div>
@@ -903,17 +903,15 @@
   </section>
 
   <section id="new">
-    <div class="label">new in day 27</div>
+    <div class="label">new in v0.9.0</div>
     <div class="panel prose">
       <ul>
-        <li><strong>Guesses kept.</strong> When a reply used Prompt lookup or Guess-ahead, the line under it ends with how many guessed words were kept, for example “guesses kept 88%”.</li>
-        <li><strong>Faster GGUF writing.</strong> On the 1st Mac, Qwen2.5 Coder 7B GGUF with a small 0.5B helper wrote at 29.9 tok/s on short chats (+34%) and 42.9 on code edits (+93%), ahead of MLX at 23.4. Auto-tune measured +25% and kept Guess-ahead.</li>
-        <li><strong>A helper only if you say yes.</strong> If a known small helper isn’t on this Mac, Settings offers it in one line under the model. Nothing downloads without a yes.</li>
-        <li><strong><code>caravan bench --speedups</code></strong> measures Off, Prompt lookup, Guess-ahead, and Auto on short chats, code edits, and long prompts.</li>
-        <li><strong>Clearer Auto-tune.</strong> Cancel shows Cancelling…, then a plain cancelled line. Applying a setting while it runs offers one “Cancel Auto-tune and apply” action. Buttons show a busy word and a result.</li>
-        <li><strong>One-Mac Topology.</strong> With only one live Mac, Balance and Thunderbolt are hidden. A Mac whose Caravan is off shows as offline, with a grey light.</li>
+        <li><strong>Finishes the work after a power loss.</strong> Each chat is saved on the 1st Mac before the model starts. If the power goes or Caravan crashes mid-reply, Caravan runs that chat again by itself once the model is back and saves the whole reply. It starts the reply over; it doesn’t pick up mid-sentence. Fetch it later with <code>caravan jobs</code>, and the chat page shows it as “Finished after a restart”. In a plug-pull test on two Macs, the split was back about 97 seconds after power returned and the cut chat finished on its own.</li>
+        <li><strong>A longer chat window.</strong> On Auto, a GGUF model’s chat window runs at the full length the model was trained for.</li>
+        <li><strong>One main branch.</strong> Install and <code>caravan update</code> follow <code>main</code>. Older installs keep updating.</li>
+        <li><strong>Waits for Thunderbolt after a restart.</strong> If Thunderbolt worked before, Caravan gives it up to a minute to come back instead of settling for Wi-Fi, and tells you if it comes up later.</li>
       </ul>
-      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY27.md" target="_blank" rel="noopener">The full Day 27 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/main/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
+      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">The v0.9.0 release</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY33.md" target="_blank" rel="noopener">the power-loss test notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/main/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
     </div>
   </section>
 
@@ -1429,7 +1427,7 @@
     <div class="label">status</div>
     <div class="panel prose">
       <p><strong>Early and experimental.</strong> Caravan has been tried on two Macs. The easy install still needs more testing on a fresh account and with FileVault. It is not a signed Mac app.</p>
-      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest tag is <a href="https://github.com/linuxbren/caravan/releases/tag/day27-2026-11-15" target="_blank" rel="noopener">Day 27</a> (November 15, 2026). Day 26 is also tagged. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
+      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest release is <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">v0.9.0</a> (November 21, 2026). Day 27 and Day 26 are also tagged. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
       <div class="links">
         <a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">source →</a>
         <a href="https://github.com/linuxbren/caravan/blob/main/INSTALL.md" target="_blank" rel="noopener">install help →</a>
