@@ -856,7 +856,7 @@
     <h1>Run AI models on your own Macs, together.</h1>
     <p class="lede">Caravan splits big models across two Macs, tunes itself for speed, and gives you a simple chat page you can open from anywhere. Open source, MLX and GGUF.</p>
     <div class="meta-row">
-      <span class="chip hot">v0.9.15</span>
+      <span class="chip hot">v0.9.16</span>
       <span class="chip">open source</span>
       <span class="chip">MLX and GGUF</span>
       <span class="chip">Apple Silicon</span>
@@ -864,7 +864,7 @@
     </div>
     <div class="cta">
       <a class="btn fill" href="#install">Install on a Mac</a>
-      <a class="btn line" href="https://github.com/linuxbren/caravan/releases/tag/v0.9.15" target="_blank" rel="noopener">Latest release</a>
+      <a class="btn line" href="https://github.com/linuxbren/caravan/releases/tag/v0.9.16" target="_blank" rel="noopener">Latest release</a>
       <a class="btn line" href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">GitHub</a>
       <a class="btn line" href="#journey">Journey</a>
     </div>
@@ -912,9 +912,10 @@
   </section>
 
   <section id="new">
-    <div class="label">new in v0.9.15 · Day 33</div>
+    <div class="label">new in v0.9.16 · Day 33</div>
     <div class="panel prose">
       <ul>
+        <li><strong>Chat with Ollama Cloud models.</strong> v0.9.16 (Day 33): press <strong>Load</strong> on a CLOUD model in Models and your chats go to it on Ollama Cloud, using the key saved in Settings. Streaming, Stop and the message queue work as usual, and the status and each reply say CLOUD. Your first cloud message asks before it leaves your Macs, and a restart comes back to cloud or your Macs the way you left it. From another device on your Wi-Fi, cloud chats need your OK first, because anyone there could use your Ollama plan; Tailscale is the safer way. The key is never shown.</li>
         <li><strong>A model’s own guesser first, else the helper.</strong> v0.9.15 (Day 33): when an MLX model comes with its own built-in guesser (a native MTP head) and it can run on this Mac, Guess-ahead uses it first. Caravan keeps it only if a quick quality and speed check, or Auto-tune, says it wins; otherwise it uses the usual helper. On GGUF, Caravan’s matched helper is picked over other small files of the same family. The Guess-ahead chip now says which guesser is in use and why.</li>
         <li><strong>First-token timing in Auto-tune.</strong> v0.9.14 (Day 33): Auto-tune now weighs the time to the first word on the long test prompt together with write speed when it tries Guess-ahead or Prompt lookup. A helper that delays the first word is kept only when generation speed pays back the wait. If first-token time is missing, the older verdict is unchanged.</li>
         <li><strong>Guess-ahead on one Mac, for MLX too.</strong> v0.9.13 (Day 33): an MLX model running on one Mac can use the same Guess-ahead helper as a split MLX model and as GGUF. Auto-tune can try it, replies still show “guesses kept,” and Settings can offer “Download helper for faster replies?” when a matching helper isn’t on this Mac yet. If you pick Native MTP (experimental), Caravan does not also load a second helper beside it.</li>
@@ -937,7 +938,7 @@
         <li><strong>Topology matches Settings.</strong> Topology’s On disk list now shows the same models as Settings, GGUF models included, and you can delete a GGUF model from there. A model that can’t load yet is marked “Not in Settings: files incomplete”.</li>
         <li><strong>Small fix.</strong> Topology now shows where Caravan really runs from on each Mac.</li>
       </ul>
-      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.15" target="_blank" rel="noopener">The v0.9.15 release</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY33.md" target="_blank" rel="noopener">the Day 33 notes</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY32.md" target="_blank" rel="noopener">the Day 32 notes</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY31.md" target="_blank" rel="noopener">the Day 31 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/main/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
+      <p>A new version can take about 5 minutes to show up after it’s published. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.16" target="_blank" rel="noopener">The v0.9.16 release</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY33.md" target="_blank" rel="noopener">the Day 33 notes</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY32.md" target="_blank" rel="noopener">the Day 32 notes</a>, <a href="https://github.com/linuxbren/caravan/blob/main/docs/DAY31.md" target="_blank" rel="noopener">the Day 31 notes</a> and the <a href="https://github.com/linuxbren/caravan/blob/main/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> are in the repo.</p>
     </div>
   </section>
 
@@ -1453,7 +1454,7 @@
     <div class="label">status</div>
     <div class="panel prose">
       <p><strong>Early and experimental.</strong> Caravan has been tried on two Macs. The easy install still needs more testing on a fresh account and with FileVault. It is not a signed Mac app.</p>
-      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest release is <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.15" target="_blank" rel="noopener">v0.9.15</a> (Day 33: a model’s own guesser first, else the helper). Day 32 is done, Nov 22–23, 2026, released v0.9.4 through v0.9.12; Spanish, Russian, Japanese and Simplified Chinese are in Settings, each still beta until a native review. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.6" target="_blank" rel="noopener">v0.9.6</a> added Stop, the message queue and the Ollama Cloud key. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.5" target="_blank" rel="noopener">v0.9.5</a> fixed the daily update check. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.4" target="_blank" rel="noopener">v0.9.4</a> added the version in Settings. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.3" target="_blank" rel="noopener">v0.9.3</a> and <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.2" target="_blank" rel="noopener">v0.9.2</a> are Day 31 follow-ups. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.1" target="_blank" rel="noopener">v0.9.1</a> is Day 31 and <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">v0.9.0</a> is Day 30. Day 27 and Day 26 are also tagged. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
+      <p>Built in the open by Brenden Dawson, under the <a href="https://github.com/linuxbren/caravan/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>. There’s a tagged release most days. The latest release is <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.16" target="_blank" rel="noopener">v0.9.16</a> (Day 33: chat with Ollama Cloud models). Day 32 is done, Nov 22–23, 2026, released v0.9.4 through v0.9.12; Spanish, Russian, Japanese and Simplified Chinese are in Settings, each still beta until a native review. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.6" target="_blank" rel="noopener">v0.9.6</a> added Stop, the message queue and the Ollama Cloud key. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.5" target="_blank" rel="noopener">v0.9.5</a> fixed the daily update check. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.4" target="_blank" rel="noopener">v0.9.4</a> added the version in Settings. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.3" target="_blank" rel="noopener">v0.9.3</a> and <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.2" target="_blank" rel="noopener">v0.9.2</a> are Day 31 follow-ups. <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.1" target="_blank" rel="noopener">v0.9.1</a> is Day 31 and <a href="https://github.com/linuxbren/caravan/releases/tag/v0.9.0" target="_blank" rel="noopener">v0.9.0</a> is Day 30. Day 27 and Day 26 are also tagged. <a href="https://github.com/linuxbren/caravan/releases" target="_blank" rel="noopener">All releases</a>.</p>
       <div class="links">
         <a href="https://github.com/linuxbren/caravan" target="_blank" rel="noopener">source →</a>
         <a href="https://github.com/linuxbren/caravan/blob/main/INSTALL.md" target="_blank" rel="noopener">install help →</a>
